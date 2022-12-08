@@ -30,22 +30,24 @@
             <label class="form-check-label inline-block text-gray-800" for="flexSwitchCheckDefault">{{english?"EN":"中"}}</label>
           </div>
         </div>
-        <div class="dropdown">
-          <button class="h-full flex justify-center items-center dropdown-toggle min-w-max" :data-bs-toggle="user_info.login?'dropdown':''" data-bs-target="#profileMenu" @click="click_login" aria-expanded="false" id="profileButton">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle w-6" viewBox="0 0 16 16" v-if="!user_info.login">
+        <div class="" id="profileButton">
+          <button class="h-full flex justify-center items-center min-w-max" v-if="!user_info.login">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle w-6" viewBox="0 0 16 16">
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
               <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
             </svg>
-            <img class="rounded-full w-6" v-if="user_info.login" src="../assets/img/logo.png" alt="profile"/>
+          </button>
+          <button class="h-full flex justify-center items-center min-w-max" v-if="user_info.login">
+            <img class="rounded-full w-6" src="../assets/img/logo.png" alt="profile"/>
           </button>
 
-          <ul class="dropdown-menu hidden flex flex-col text-center items-start justify-center p-0" v-if="user_info.login" id="profileMenu">
-            <li class="dropdown-item bg-gray-100 hover:bg-blue-300 w-48 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
+          <ul class="flex flex-col text-center items-start justify-center p-0 -ml-32 absolute" :class="{hidden:!show_profile_menu}" v-if="user_info.login" id="profileMenu">
+            <li class="bg-gray-100 hover:bg-blue-300 w-40 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
               <span>
                 {{english?"Dashboard":"控制板"}}
               </span>
             </li>
-            <li class="dropdown-item bg-gray-100 hover:bg-blue-300 w-48 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
+            <li class="bg-gray-100 hover:bg-blue-300 w-40 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
               <span>
                 {{english?"Setting":"设置"}}
               </span>
@@ -53,13 +55,14 @@
             <li>
               <hr class="w-5/6 mx-auto"/>
             </li>
-            <li class="dropdown-item bg-gray-100 hover:bg-blue-300 w-48 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
+            <li class="bg-gray-100 hover:bg-blue-300 w-40 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
               <span>
                 {{english?"Logout":"退出"}}
               </span>
             </li>
           </ul>
         </div>
+
     </div>
   </nav>
 
@@ -103,23 +106,28 @@
 
 <script setup>
   import {onMounted, ref} from "vue";
-  import {update_user_info, user_info} from "@/utility/utility";
+  import {update_user_info, user_info, listen_click} from "@/utility/utility";
   import {useRouter} from "vue-router";
 
   const english = ref(false);
   const router = useRouter();
+  const show_profile_menu = ref(false);
 
   onMounted(()=>{
     update_user_info();
-    user_info.login=true
+    user_info.login=true;
+
+    listen_click(["profileButton"], function (){
+      if(user_info.login){
+        show_profile_menu.value = !show_profile_menu.value;
+      }else{
+        router.push("/login");
+      }
+    }, function (){
+      show_profile_menu.value = false;
+    });
   })
 
-
-  function click_login(){
-    if(!user_info.login){
-      router.push("/login");
-    }
-  }
 
   const hide_mobile_menu = ref(true);
   function trigger_mobile_menu(){

@@ -35,9 +35,19 @@ export function update_user_info(){
     }
 }
 
-export function listen_click(id, click_in, click_out){
+function any_contain(ids, target){
+    for(let id of ids){
+        const ref = document.getElementById(id);
+        if(ref&& ref.contains(target)){
+            return true
+        }
+    }
+    return false;
+}
+
+export function listen_click(ids, click_in, click_out){
     window.addEventListener('click', function(e){
-        if (document.getElementById(id).contains(e.target)){
+        if (any_contain(ids, e.target)){
             if(click_in){
                 click_in();
             }

@@ -694,6 +694,14 @@ video {
   margin-left: 0.5em;
 }
 
+.btn.active {
+  box-shadow: none;
+}
+
+.btn.active:focus {
+  box-shadow: none;
+}
+
 .collapse:not(.show) {
   display: none;
 }
@@ -819,6 +827,10 @@ video {
   flex-basis: 0;
 }
 
+.tab-content > .active {
+  display: block;
+}
+
 .navbar-collapse {
   -ms-flex-basis: 100%;
   flex-basis: 100%;
@@ -885,6 +897,97 @@ video {
 
 .navbar-dark .navbar-nav .nav-link.active {
   color: #fff;
+}
+
+.carousel-item.active {
+  display: block;
+}
+
+.active.carousel-item-end {
+  transform: translateX(100%);
+}
+
+.active.carousel-item-start {
+  transform: translateX(-100%);
+}
+
+.carousel-fade .carousel-item.active {
+  z-index: 1;
+  opacity: 1;
+}
+
+.carousel-fade .active.carousel-item-start {
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0s 0.6s;
+}
+
+.carousel-fade .active.carousel-item-end {
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0s 0.6s;
+}
+
+.carousel-indicators .active {
+  opacity: 1;
+}
+
+.ripple-wave.active {
+  transform: scale(1);
+  opacity: 0;
+}
+
+.timepicker-current.active {
+  opacity: 1;
+}
+
+.timepicker-mode-wrapper.active {
+  opacity: 1;
+}
+
+.timepicker-time-tips-minutes.active {
+  color: #fff;
+  background-color: #2979ff;
+  font-weight: 400;
+}
+
+.timepicker-time-tips-inner.active {
+  color: #fff;
+  background-color: #2979ff;
+  font-weight: 400;
+}
+
+.timepicker-time-tips-hours.active {
+  color: #fff;
+  background-color: #2979ff;
+  font-weight: 400;
+}
+
+.timepicker-time-tips.active {
+  color: #fff;
+}
+
+.timepicker-hour-mode.active {
+  color: #fff;
+  opacity: 1;
+}
+
+.timepicker-hour.active {
+  color: #fff;
+  opacity: 1;
+}
+
+.timepicker-minute.active {
+  color: #fff;
+  opacity: 1;
+}
+
+.timepicker-icon-up.active {
+  opacity: 1;
+}
+
+.timepicker-icon-down.active {
+  opacity: 1;
 }
 
 .collapse {
@@ -1740,6 +1843,14 @@ video {
   }
 }
 
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
 .collapse {
   visibility: collapse;
 }
@@ -1858,6 +1969,14 @@ video {
   margin-top: -0.5rem;
 }
 
+.-ml-48 {
+  margin-left: -12rem;
+}
+
+.-ml-32 {
+  margin-left: -8rem;
+}
+
 .block {
   display: block;
 }
@@ -1904,6 +2023,10 @@ video {
 
 .h-8 {
   height: 2rem;
+}
+
+.max-h-0 {
+  max-height: 0px;
 }
 
 .w-full {
@@ -1985,6 +2108,10 @@ video {
 .min-w-max {
   min-width: -moz-max-content;
   min-width: max-content;
+}
+
+.max-w-0 {
+  max-width: 0rem;
 }
 
 .flex-grow {
@@ -2190,6 +2317,26 @@ video {
   background-color: rgb(209 213 219 / 0.5);
 }
 
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.from-indigo-500 {
+  --tw-gradient-from: #6366f1;
+  --tw-gradient-to: rgb(99 102 241 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-blue-500 {
+  --tw-gradient-from: #3b82f6;
+  --tw-gradient-to: rgb(59 130 246 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-pink-100\/10 {
+  --tw-gradient-to: rgb(252 231 243 / 0.1);
+}
+
 .bg-contain {
   background-size: contain;
 }
@@ -2212,6 +2359,10 @@ video {
 
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
 }
 
 .px-3 {
@@ -2420,6 +2571,10 @@ video {
   opacity: 1;
 }
 
+.opacity-0 {
+  opacity: 0;
+}
+
 .shadow-xl {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
@@ -2455,6 +2610,20 @@ video {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.delay-150 {
+  transition-delay: 150ms;
+}
+
+.delay-1000 {
+  transition-delay: 1000ms;
 }
 
 .duration-150 {
