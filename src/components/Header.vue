@@ -1,6 +1,6 @@
 <template>
 <!--navbar for PC-->
-  <nav class="hidden md:flex flex-row justify-between items-center bg-gray-300/30 text-black absolute h-12 w-full space-x-2 px-3 not-select">
+  <nav class="hidden md:flex flex-row justify-between items-center bg-gray-300/30 text-black absolute h-12 w-full space-x-2 px-3 not-select z-10">
 <!--logo-->
     <div class="w-10 text-center">
       <a href="/">
@@ -41,7 +41,7 @@
             <img class="rounded-full w-6" src="../assets/img/logo.png" alt="profile"/>
           </button>
 
-          <Transition name="slide-fade">
+          <Transition name="profile-fade">
             <ul class="flex flex-col text-center items-start justify-center p-0 -ml-32 absolute" v-if="show_profile_menu">
               <li class="bg-gray-100 hover:bg-blue-300 w-40 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
                 <a class="w-full text-start" href="/dashboard">
@@ -70,7 +70,7 @@
 
 
 <!--navbar for Mobile-->
-  <nav class="flex flex-col md:hidden not-select justify-between items-center bg-gray-300/50 absolute w-full py-2 px-0 space-x-2">
+  <nav class="flex flex-col md:hidden not-select justify-between items-center bg-gray-300/50 w-full py-2 px-0 space-x-2 z-10" :class="{absolute:!show_mobile_menu}">
     <div class="flex flex-row justify-between items-center w-full">
       <div class="w-16 ml-2 duration-300 ease-in-out transition grow" :class="{move_to_center:show_mobile_menu}">
         <a href="/">
@@ -88,7 +88,7 @@
       </div>
     </div>
 
-    <Transition name="slide-fade">
+    <Transition name="menu-fade">
       <div class="flex flex-col" v-if="show_mobile_menu" id="mobileMenu">
         <ul class="flex flex-col pl-0 list-style-none mr-auto">
           <li class="p-2 w-60 text-center">
@@ -138,10 +138,10 @@
 <script setup>
   import {onMounted, ref} from "vue";
   import {update_user_info, user_info, listen_click} from "@/utility/utility";
+  import {english} from "@/utility/language";
   import {useRouter} from "vue-router";
 
   //Global Variable
-  const english = ref(false);
   const router = useRouter();
   const show_profile_menu = ref(false);
 
@@ -182,16 +182,29 @@
   user-select: none;
 }
 
-.slide-fade-enter-active {
+.profile-fade-enter-active {
   transition: all 0.3s ease-out;
 }
 
-.slide-fade-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+.profile-fade-leave-active {
+  transition: all 0.3s ease-out;
 }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
+.profile-fade-enter-from,
+.profile-fade-leave-to {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+.menu-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.menu-fade-leave-active {
+}
+
+.menu-fade-enter-from,
+.menu-fade-leave-to {
   transform: translateY(-20px);
   opacity: 0;
 }

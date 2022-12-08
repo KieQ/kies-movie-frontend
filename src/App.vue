@@ -6,9 +6,11 @@ import Footer from "@/components/Footer.vue";
 </script>
 
 <template>
-  <Header/>
-  <Body/>
-  <Footer/>
+  <div class="flex flex-col h-screen">
+    <Header/>
+    <Body class="grow"/>
+    <Footer/>
+  </div>
 </template>
 
 <style scoped>
