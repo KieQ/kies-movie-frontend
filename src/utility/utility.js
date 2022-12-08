@@ -34,3 +34,17 @@ export function update_user_info(){
         }
     }
 }
+
+export function listen_click(id, click_in, click_out){
+    window.addEventListener('click', function(e){
+        if (document.getElementById(id).contains(e.target)){
+            if(click_in){
+                click_in();
+            }
+        } else{
+            if(click_out){
+                click_out();
+            }
+        }
+    });
+}
