@@ -54,7 +54,7 @@ import {wrap_if_too_long} from "@/utility/utility";
   const left = ref(true);
 
   let timeout;
-  function click_left() {
+  function click_right() {
     clearTimeout(timeout);
     left.value = true;
     active_idx.value++;
@@ -64,7 +64,7 @@ import {wrap_if_too_long} from "@/utility/utility";
     timeout = setTimeout(click_left, 5000);
   }
 
-  function click_right() {
+  function click_left() {
     clearTimeout(timeout);
     left.value = false;
     active_idx.value--;
