@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 import {english} from "@/utility/language";
 import {wrap_if_too_long} from "@/utility/utility";
 
@@ -99,7 +99,17 @@ import {wrap_if_too_long} from "@/utility/utility";
     timeout = setTimeout(click_right, 5000);
   })
 
-
+  watch(english, async (new_value, old_value)=>{
+    let lang = new_value ? "en" : "zh-cn"
+    let result = await fetch(`https://kies.cf/api/homepage/content?lang=${lang}`);
+    if (result.status === 200) {
+      let j = await result.json();
+      if (j.status_code === 0) {
+        content.length = 0;
+        content.push(...j.data.carousel_items);
+      }
+    }
+  })
 
 </script>
 
