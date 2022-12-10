@@ -5,8 +5,8 @@
         <div class="absolute top-0 h-full overflow-hidden flex flex-col justify-end not-select" v-if="idx===active_idx">
           <img class="object-cover -z-10 absolute w-full h-full" :src="item.background_image" alt="">
           <div class="flex flex-col px-32 py-24">
-            <h1 class="text-white text-2xl">{{item.title}}</h1>
-            <p class="text-white text-lg">{{wrap_if_too_long(item.content, 400)}}</p>
+            <h1 class="text-white text-lg md:text-2xl">{{item.title}}</h1>
+            <p class="text-white text-sm md:text-lg">{{wrap_if_too_long(item.content, 400)}}</p>
           </div>
         </div>
       </template>
