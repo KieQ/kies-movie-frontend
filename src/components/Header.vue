@@ -136,7 +136,7 @@
 </template>
 
 <script setup>
-  import {onMounted, ref} from "vue";
+import {onMounted, ref, watchEffect} from "vue";
   import {update_user_info, user_info, listen_click} from "@/utility/utility";
   import {english} from "@/utility/language";
   import {useRouter} from "vue-router";
@@ -173,7 +173,13 @@
   }
 
 
-
+  watchEffect( ()=>{
+    if(english.value){
+      document.title = "Little Bear Watches Movie";
+    }else{
+      document.title = "小熊看电影"
+    }
+  })
 
 </script>
 
