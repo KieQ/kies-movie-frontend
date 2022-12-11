@@ -14,5 +14,5 @@ import Footer from "@/components/Footer.vue";
 </template>
 
 <style scoped>
-
+* { -webkit-tap-highlight-color: rgba(0,0,0,0); }
 </style>

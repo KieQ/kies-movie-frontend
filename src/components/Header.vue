@@ -70,15 +70,15 @@
 
 
 <!--navbar for Mobile-->
-  <nav class="flex flex-col md:hidden not-select justify-between items-center bg-gray-300/50 w-full py-2 px-0 space-x-2 z-10" :class="{absolute:!show_mobile_menu}">
+  <nav class="flex flex-col md:hidden not-select justify-between items-center bg-gray-300/50 w-full py-2 px-0 space-x-2 z-10 not-select" :class="{absolute:!show_mobile_menu}">
     <div class="flex flex-row justify-between items-center w-full">
-      <div class="w-16 ml-2 duration-300 ease-in-out transition grow" :class="{move_to_center:show_mobile_menu}">
+      <div class="w-16 ml-2 origin-left	duration-300 ease-in-out transition grow" :class="{move_to_center:show_mobile_menu}">
         <a href="/">
           <img src="../assets/img/logo.png" class="w-8 ml-2 brightness-90 hover:brightness-100" alt="logo"/>
         </a>
       </div>
 
-      <div class="w-16 cursor-pointer z-20" @click="trigger_mobile_menu">
+      <div class="w-16 cursor-pointer z-20 outline-none" @click="trigger_mobile_menu">
           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars"
                class="w-6 duration-300 ease-in-out transition" :class="{rotate :show_mobile_menu}" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
             <path fill="currentColor"
@@ -214,6 +214,6 @@
 }
 
 .move_to_center{
-  transform: translateX(50%) translateX(8px);
+  transform: translateX(50%);
 }
 </style>
