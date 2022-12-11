@@ -6,7 +6,7 @@
           <img class="object-cover -z-10 absolute w-full h-full" :src="item.background_image" alt="">
           <div class="flex flex-col px-32 py-24">
             <h1 class="text-white text-lg md:text-2xl">{{item.title}}</h1>
-            <p class="text-white text-sm md:text-lg">{{wrap_if_too_long(item.content, 400)}}</p>
+            <p class="text-white text-sm md:text-lg">{{content_text(item.content)}}</p>
           </div>
         </div>
       </template>
@@ -52,6 +52,11 @@ import {wrap_if_too_long} from "@/utility/utility";
 
   const active_idx = ref(0)
   const move_left = ref(true);
+
+  function content_text(content){
+    let length = window.innerWidth < 768?150:400;
+    return wrap_if_too_long(content,length);
+  }
 
   let timeout;
   function click_right() {
