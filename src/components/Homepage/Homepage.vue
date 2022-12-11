@@ -48,7 +48,7 @@ import {onMounted, reactive, ref, watch} from "vue";
 import {english} from "@/utility/language";
 import {wrap_if_too_long} from "@/utility/utility";
 
-  const content = reactive([])
+  const content = reactive([{"poster_image":"https://image.tmdb.org/t/p/original/7oOHmp6SwuLmVEpdDInm14OmlzL.jpg","background_image":"https://image.tmdb.org/t/p/original/6kGg5jANkqrQK7X8EJUJCNi9n0e.jpg","title":"我们诞生在中国","content":"广袤的中华大地，数不胜数的美丽生灵与人类共生，谱写一曲曲壮美的生命之歌。生活在高原地带的雪豹达娃不久前刚刚成为两个小家伙的妈妈，为了抚养孩子长大，她不仅要一次次出击捕猎，还要面对来自强劲对手的挑战。四川某处的茂密竹林中，大熊猫丫丫正和女儿美美快乐玩耍，美美对世界充满好奇，渴望尽早挣脱妈妈的束缚去拥抱未知的世界。神农架的原始丛林里，小金丝猴淘淘倍感落寞，因为新出生的妹妹夺走了本该属于他的关爱，于是淘淘离开家人，成为了流浪猴中的一员，却必须面对种种残酷的现实。可可西里的荒原上，母藏羚羊和丈夫们告别，成群结队赶往某个圣地，迎接新生命的到来。而另一边，仙鹤在长空中翱翔，带走一个又一个结束了生命之旅的灵魂，展开下一段充满未知的轮回……","value":""},{"poster_image":"https://image.tmdb.org/t/p/original/tAmHBydreAbLn0gPXBHmbyEytNP.jpg","background_image":"https://image.tmdb.org/t/p/original/b5iPSqX6sRtR4JVPeaY5ecq7BJN.jpg","title":"大鱼海棠","content":"所有活着的人类，都是海里一条巨大的鱼；出生的时候他们从海的此岸出发。他们的生命就像横越大海，有时相遇，有时分开……死的时候，他们便到了岸，各去各的世界。  四十五亿年前，这个星球上，只有一片汪洋大海，和一群古老的大鱼。在与人类世界平行的空间里，生活着一个规规矩矩、遵守秩序的族群，他们为神工作，掌管世界万物运行规律，也掌管人类的灵魂。他们的天空与人类世界的大海相连。他们既不是神，也不是人，他们是“其他人”。  少女椿，作为生家族的继承人，掌管着海棠花的生长。不惜违背族人戒律，逆天而行，在海底世界秘密饲养人类少年的灵魂——一条拇指大的小鱼。","value":""},{"poster_image":"https://image.tmdb.org/t/p/original/tiUU7Mx02gFN5UPW7NHraXJf1FI.jpg","background_image":"https://image.tmdb.org/t/p/original/kRBf1hnv1asH27ctI5Gkzi3Jslx.jpg","title":"妻子的浪漫旅行","content":"　　节目推出夫妻隔空对话新模式。让妻子团踏上浪漫之旅，丈夫团则留守棚内，远程观察旅途中的妻子，了解其生活中的另一面。在这场跨时空对话中，夫妻重新审视彼此关系，治愈婚姻。节目也通过展现不同的夫妻关系，和观众一同探寻幸福婚姻的密码。","value":""}])
 
   const active_idx = ref(0)
   const move_left = ref(true);
