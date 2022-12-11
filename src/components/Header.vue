@@ -12,22 +12,24 @@
     <div class="grow flex flex-row justify-start h-full ml-20 space-x-0 pl-5 text-center">
       <a href="/movie" class="w-20">
         <div class="mx-auto px-5 h-full flex flex-row items-center justify-center hover:bg-gray-600/80 hover:text-white hover:shadow-xl">
-          <span>{{english?"Movie":"电影"}}</span>
+          <span>{{translate("Movie","电影")}}</span>
         </div>
       </a>
       <a href="/about" class="w-20">
         <div class="mx-auto px-5 h-full flex flex-row items-center justify-center hover:bg-gray-600/80 hover:text-white hover:shadow-xl">
-          <span>{{english?"About":"关于"}}</span>
+          <span>{{translate("About","关于")}}</span>
         </div>
       </a>
     </div>
 
     <!--right part-->
     <div class="flex flex-row h-full space-x-4">
-        <div class="px-5 h-full flex flex-row items-center w-20">
-          <div class="flex flex-row items-center form-check form-switch space-x-2">
-            <input class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="languageSwitch" v-model="english">
-            <label class="form-check-label inline-block text-gray-800" for="flexSwitchCheckDefault">{{english?"EN":"中"}}</label>
+        <div class="px-5 h-full flex flex-row items-center justify-center">
+          <div class="flex flex-row justify-center items-center">
+            <select class="w-full rounded-lg w-auto focus:outline-none bg-white/80" v-model="language">
+              <option selected value="en">English</option>
+              <option value="zh-cn">中文</option>
+            </select>
           </div>
         </div>
         <div class="" id="profileButton">
@@ -45,12 +47,12 @@
             <ul class="flex flex-col text-center items-start justify-center p-0 -ml-32 absolute" v-if="show_profile_menu">
               <li class="bg-gray-100 hover:bg-blue-300 w-40 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
                 <a class="w-full text-start" href="/dashboard">
-                  {{english?"Dashboard":"控制板"}}
+                  {{translate("Dashboard","控制板")}}
                 </a>
               </li>
               <li class="bg-gray-100 hover:bg-blue-300 w-40 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
                 <a class="w-full text-start" href="/setting">
-                  {{english?"Setting":"设置"}}
+                  {{translate("Setting","设置")}}
                 </a>
               </li>
               <li>
@@ -58,7 +60,7 @@
               </li>
               <li class="bg-gray-100 hover:bg-blue-300 w-40 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
                 <a class="w-full text-start" href="/logout">
-                  {{english?"Logout":"退出"}}
+                  {{translate("Logout","退出")}}
                 </a>
               </li>
             </ul>
@@ -93,53 +95,66 @@
         <ul class="flex flex-col pl-0 list-style-none mr-auto">
           <li class="p-2 w-60 text-center">
             <div class="h-full flex flex-row items-center justify-center w-full">
-              <div class="flex flex-row items-center form-check form-switch space-x-2">
-                <input class="form-check-input appearance-none w-16 -ml-10 rounded-full float-left h-8 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="languageSwitch" v-model="english">
-                <label class="form-check-label inline-block text-gray-800" for="flexSwitchCheckDefault">{{english?"EN":"中"}}</label>
+              <div class="flex flex-row justify-center items-center">
+                <select class="mx-auto rounded-lg w-24 focus:outline-none bg-white/80" v-model="language">
+                  <option selected value="en">English</option>
+                  <option value="zh-cn">中文</option>
+                </select>
               </div>
             </div>
           </li>
           <li class="p-2 w-60 text-center">
             <a class="text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="/movie">
-              {{english?"Movie":"电影"}}
+              {{translate("Movie","电影")}}
             </a>
           </li>
           <li class="p-2 w-60 text-center">
             <a class="text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="/about">
-              {{english?"About":"关于"}}
+              {{translate("About","关于")}}
             </a>
           </li>
           <li class="p-2 w-60 flex flex-row justify-center" v-if="!user_info.login">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="unLogin_profile_click">
-              {{ english?"LOG IN":"登陆" }}
+              {{ translate("LOG IN","登陆") }}
             </button>
           </li>
           <li class="p-2 w-60 text-center" v-if="user_info.login">
             <a class="text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="/dashboard">
-              {{english?"Dashboard":"控制板"}}
+              {{translate("Dashboard","控制板")}}
             </a>
           </li>
           <li class="p-2 w-60 text-center" v-if="user_info.login">
             <a class="text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="/setting">
-              {{english?"Setting":"设置"}}
+              {{translate("Setting","设置")}}
             </a>
           </li>
           <li class="p-2 w-60 text-center" v-if="user_info.login">
             <a class="text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="/logout">
-              {{english?"Logout":"退出"}}
+              {{translate("Logout","退出")}}
             </a>
           </li>
         </ul>
       </div>
     </Transition>
   </nav>
+
+  <Dialog
+      v-if="popup_show"
+      :title="translate('Use English as Default?','是否默认使用中文？')"
+      :content="translate('You are able to use English as your default language, when you access this website next time, English will be chosen for you automatically.','您可以设置中文为您的默认语言，当您下次访问本网站时，系统自动将选择中文展示。')"
+      :button='[{text: translate("Sure","好的"),color: "blue", event:"okEvent" ,grow: false}, {text: translate("No","不用"),color: "red",event: "noEvent",grow: false}]'
+      @ok-event="change_default_language" @no-event="close_popup"
+  />
+
 </template>
 
 <script setup>
-import {onMounted, ref, watchEffect} from "vue";
-  import {update_user_info, user_info, listen_click} from "@/utility/utility";
-  import {english} from "@/utility/language";
+  import {onMounted, ref, watchEffect} from "vue";
+  import {listen_click} from "@/utility/utility";
+  import {user_info} from "@/utility/session";
+  import {language, translate} from "@/utility/language";
   import {useRouter} from "vue-router";
+  import Dialog from "@/components/Dialog/Dialog.vue";
 
   //Global Variable
   const router = useRouter();
@@ -147,8 +162,6 @@ import {onMounted, ref, watchEffect} from "vue";
 
   //Mount
   onMounted(()=>{
-    update_user_info();
-    user_info.login=true;
 
     listen_click(["profileButton"], function (){
       if(user_info.login){
@@ -172,12 +185,22 @@ import {onMounted, ref, watchEffect} from "vue";
     show_mobile_menu.value = !show_mobile_menu.value;
   }
 
+  const popup_show = ref(false);
+
+
+  function close_popup(){
+    popup_show.value = false;
+  }
+
+  async function change_default_language(){
+
+  }
 
   watchEffect( ()=>{
-    if(english.value){
-      document.title = "Little Bear Watches Movie";
-    }else{
-      document.title = "小熊看电影"
+    let _ = language.value;
+    document.title = translate("Little Bear Watches Movie", "小熊看电影")
+    if(user_info.login){
+      popup_show.value = true;
     }
   })
 
@@ -220,6 +243,6 @@ import {onMounted, ref, watchEffect} from "vue";
 }
 
 .move_to_center{
-  transform: translateX(50%);
+  transform: translateX(50%) translateX(8px);
 }
 </style>
