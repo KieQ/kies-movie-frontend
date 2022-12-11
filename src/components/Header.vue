@@ -78,7 +78,7 @@
         </a>
       </div>
 
-      <div class="w-16 cursor-pointer" @click="trigger_mobile_menu">
+      <div class="w-16 cursor-pointer z-20" @click="trigger_mobile_menu">
           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars"
                class="w-6 duration-300 ease-in-out transition" :class="{rotate :show_mobile_menu}" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
             <path fill="currentColor"
