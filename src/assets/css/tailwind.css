@@ -1296,6 +1296,10 @@ video {
   cursor: pointer;
 }
 
+.touch-none {
+  touch-action: none;
+}
+
 .appearance-none {
   -webkit-appearance: none;
      -moz-appearance: none;
