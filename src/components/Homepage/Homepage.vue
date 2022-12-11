@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import {onMounted, reactive, ref, watch} from "vue";
+import {onMounted, onUnmounted, reactive, ref, watch} from "vue";
 import {english} from "@/utility/language";
 import {wrap_if_too_long} from "@/utility/utility";
 
@@ -104,6 +104,10 @@ import {wrap_if_too_long} from "@/utility/utility";
       }
     }
     timeout = setTimeout(click_right, 5000);
+  })
+
+  onUnmounted(()=>{
+    clearTimeout(timeout);
   })
 
   watch(english, async (new_value, old_value)=>{
