@@ -61,6 +61,8 @@
 import {translate} from "@/utility/language";
 import Dialog from "@/components/Dialog/Dialog.vue";
 import {ref} from "vue";
+import {session_sign_up} from "@/utility/backend";
+import {get_cookie} from "@/utility/session";
 
 
 const show_same_dialog = ref(false);
@@ -76,7 +78,11 @@ async function sign_up(){
     show_same_dialog.value = true;
     return;
   }
-
+  await session_sign_up({
+    account,
+    password,
+    default_language:get_cookie("lang")
+  })
 
 }
 

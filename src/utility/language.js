@@ -1,7 +1,7 @@
-import {computed, ref, watch, watchEffect} from "vue";
+import {ref, watch} from "vue";
+import {get_cookie} from "@/utility/session";
 
-
-export const language = ref('en');
+export const language = ref(get_cookie("lang")??'en');
 
 export function translate(en, zh){
     switch (language.value){
@@ -13,3 +13,6 @@ export function translate(en, zh){
     }
     return ""
 }
+watch(language, ()=>{
+    document.cookie = `lang=${language.value}`
+})

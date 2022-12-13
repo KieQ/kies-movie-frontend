@@ -6,7 +6,7 @@ export const user_info = reactive({
 })
 
 
-function get_cookie(name){
+export function get_cookie(name){
     let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     if (match) return match[2];
 }

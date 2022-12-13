@@ -9,7 +9,6 @@
     "tailwind": "npx tailwindcss -i ./src/template/tailwind/tailwind.css -o ./src/assets/css/tailwind.css"
   },
   "dependencies": {
-    "tw-elements": "^1.0.0-alpha13",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },

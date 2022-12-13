@@ -3,7 +3,6 @@ import App from './App.vue';
 import router from './router';
 
 import './assets/css/tailwind.css';
-import 'tw-elements';
 
 const app = createApp(App);
 

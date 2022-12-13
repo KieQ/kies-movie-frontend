@@ -151,7 +151,7 @@
 <script setup>
   import {onMounted, ref, watchEffect} from "vue";
   import {listen_click} from "@/utility/utility";
-  import {user_info} from "@/utility/session";
+  import {get_cookie, user_info} from "@/utility/session";
   import {language, translate} from "@/utility/language";
   import {useRouter} from "vue-router";
   import Dialog from "@/components/Dialog/Dialog.vue";
@@ -162,7 +162,6 @@
 
   //Mount
   onMounted(()=>{
-
     listen_click(["profileButton"], function (){
       if(user_info.login){
         show_profile_menu.value = !show_profile_menu.value;
