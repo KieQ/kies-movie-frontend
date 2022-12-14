@@ -3,7 +3,7 @@
   <nav class="hidden md:flex flex-row justify-between items-center bg-gray-300/30 text-black absolute h-12 w-full space-x-2 px-3 not-select z-10">
 <!--logo-->
     <div class="w-10 text-center">
-      <a href="/public">
+      <a href="/">
       <img src="../assets/img/logo.png" class="w-8 mx-auto brightness-90 hover:brightness-100" alt="logo"/>
       </a>
     </div>
@@ -59,9 +59,9 @@
                 <hr class="w-5/6 mx-auto"/>
               </li>
               <li class="bg-gray-100 hover:bg-blue-300 w-40 h-10 flex flex-col justify-center items-start px-3 cursor-pointer">
-                <a class="w-full text-start" href="/logout">
+                <button class="w-full text-start" @click="logout">
                   {{translate("Logout","退出")}}
-                </a>
+                </button>
               </li>
             </ul>
           </Transition>
@@ -75,7 +75,7 @@
   <nav class="flex flex-col md:hidden not-select justify-between items-center bg-gray-300/50 w-full py-2 px-0 space-x-2 z-10 not-select" :class="{absolute:!show_mobile_menu}">
     <div class="flex flex-row justify-between items-center w-full">
       <div class="w-16 ml-2 origin-left	duration-300 ease-in-out transition grow" :class="{move_to_center:show_mobile_menu}">
-        <a href="/public">
+        <a href="/">
           <img src="../assets/img/logo.png" class="w-8 ml-2 brightness-90 hover:brightness-100" alt="logo"/>
         </a>
       </div>
@@ -138,23 +138,16 @@
     </Transition>
   </nav>
 
-  <Dialog
-      v-if="popup_show"
-      :title="translate('Use English as Default?','是否默认使用中文？')"
-      :content="translate('You are able to use English as your default language, when you access this website next time, English will be chosen for you automatically.','您可以设置中文为您的默认语言，当您下次访问本网站时，系统自动将选择中文展示。')"
-      :button='[{text: translate("Sure","好的"),color: "blue", event:"okEvent" ,grow: false}, {text: translate("No","不用"),color: "red",event: "noEvent",grow: false}]'
-      @ok-event="change_default_language" @no-event="close_popup"
-  />
-
 </template>
 
 <script setup>
-  import {onMounted, ref, watchEffect} from "vue";
+  import {onMounted, ref, watch} from "vue";
   import {listen_click} from "@/utility/utility";
-  import {user_info} from "@/utility/session";
+  import {update_user_info, user_info} from "@/utility/session";
   import {language, translate} from "@/utility/language";
   import {useRouter} from "vue-router";
-  import Dialog from "@/components/Common/Dialog.vue";
+  import {alert_operator, dialog_operator} from "@/utility/components_common";
+  import {session_log_out, user_update} from "@/utility/backend";
 
   //Global Variable
   const router = useRouter();
@@ -162,6 +155,8 @@
 
   //Mount
   onMounted(()=>{
+    update_user_info();
+
     listen_click(["profileButton"], function (){
       if(user_info.login){
         show_profile_menu.value = !show_profile_menu.value;
@@ -173,7 +168,7 @@
     });
   })
 
-  //Click Not Login Profile Mobile
+  //Click NoLogin Profile Mobile
   function unLogin_profile_click(){
     router.push("/login");
   }
@@ -184,24 +179,42 @@
     show_mobile_menu.value = !show_mobile_menu.value;
   }
 
-  const popup_show = ref(false);
-
-
-  function close_popup(){
-    popup_show.value = false;
-  }
-
+  
+  //Language watching
   async function change_default_language(){
-
+    let result = await user_update(user_info.account, {default_language: language.value});
+    if(result.status_code !== 0){
+      alert_operator.push_alert("error", translate(`failed to update, reason: ${result.status_message}`, `更新失败，原因：${result.status_message}`));
+    }else{
+      alert_operator.push_alert("ok", translate("success to update default language", "成功更新默认语言"));
+    }
   }
 
-  watchEffect( ()=>{
-    let _ = language.value;
+  watch(language, (new_value, old_value)=>{
     document.title = translate("Little Bear Watches Movie", "小熊看电影")
     if(user_info.login){
-      popup_show.value = true;
+      let dialog_id = dialog_operator.once_dialog_id;
+      let btn = [];
+      btn.push(dialog_operator.create_button(translate("Sure","好的"), 'blue', async ()=>{await change_default_language(); dialog_operator.close_dialog(dialog_id)}));
+      btn.push(dialog_operator.create_button(translate("No","不用"),'yellow', ()=>dialog_operator.close_dialog(dialog_id)));
+      dialog_operator.push_dialog(dialog_id, translate('Use English as Default?','是否默认使用中文？'),
+          translate('You are able to use English as your default language, when you access this website next time, English will be chosen for you automatically.','您可以设置中文为您的默认语言，当您下次访问本网站时，系统自动将选择中文展示。'),'info',"blue",0, btn);
     }
   })
+  
+  //Logout
+  async function logout() {
+    let result = await session_log_out();
+    if(result.status_code !== 0){
+      alert_operator.push_alert("error", translate(`failed to log out, reason: ${result.status_message}`, `退出登录失败，原因：${result.status_message}`));
+    }else{
+      alert_operator.push_alert("ok", translate("success to log out", "退出登录成功"));
+    }
+    setTimeout(()=>{
+      window.location.replace("/");
+      window.location.reload();
+    }, 3000);
+  }
 
 </script>
 

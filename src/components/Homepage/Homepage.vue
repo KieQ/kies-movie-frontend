@@ -108,13 +108,10 @@ import {get_homepage_content} from "@/utility/backend"
   })
 
   watch(language, async (new_value, old_value)=>{
-    let result = await fetch(`https://kies.cf/api/homepage/content?lang=${new_value}`);
-    if (result.status === 200) {
-      let j = await result.json();
-      if (j.status_code === 0) {
+    let result = await get_homepage_content();
+    if (result.status_code === 0) {
         content.length = 0;
-        content.push(...j.data.carousel_items);
-      }
+        content.push(...result.data.carousel_items);
     }
   })
 

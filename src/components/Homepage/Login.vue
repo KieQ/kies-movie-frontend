@@ -21,7 +21,7 @@
               <input type="checkbox" class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="rememberMeInput"/>
               <label class="inline-block text-gray-800" for="rememberMeInput">{{ translate("Remember me","记住我") }}</label>
             </div>
-            <a href="#!" class="text-gray-800">{{ translate("Forgot password?","忘记密码？") }}</a>
+            <a href="/forget_password" class="text-gray-800">{{ translate("Forgot password?","忘记密码？") }}</a>
           </div>
 
           <div class="text-center lg:text-left">
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import {translate} from "@/utility/language";
+import {language, translate} from "@/utility/language";
 import {session_log_in} from "@/utility/backend";
 import {alert_operator, dialog_operator} from "@/utility/components_common";
 import {useRouter} from "vue-router";
@@ -59,6 +59,9 @@ async function login() {
   if(result.status_code !== 0){
     alert_operator.push_alert("error", translate(`Failed to log in, reason: ${result.status_message}`, `登陆失败，原因：${result.status_message}`));
   }else{
+    if(result.data.default_language !== undefined ){
+      language.value = result.data.default_language;
+    }
     let dialog_id = dialog_operator.once_dialog_id;
     let btn = dialog_operator.create_button(translate("Go","出发"), 'blue', () => success_login(dialog_id));
     dialog_operator.push_dialog(dialog_id,
