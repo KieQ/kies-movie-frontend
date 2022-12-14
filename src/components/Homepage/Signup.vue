@@ -23,9 +23,9 @@
               <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translate("Confirm Password", "确认密码")}}</label>
               <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
             </div>
-            <div class="flex items-start">
+            <div class="flex items-start" :class="{shake:shake_running}">
               <div class="flex items-center h-5">
-                <input id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required="">
+                <input id="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required="">
               </div>
               <div class="ml-3 text-sm">
                 <label for="terms" class="font-light text-gray-500 dark:text-gray-300">{{translate("I accept the", "我接受")}} <a class="font-medium text-blue-600 hover:underline dark:text-blue-500" href="/terms_and_conditions">{{translate("Terms and Conditions", "服务条款")}}</a></label>
@@ -41,59 +41,92 @@
       </div>
     </div>
   </section>
-
-  <Dialog
-      v-if="show_same_dialog"
-      :title="translate('Password Error','密码错误')"
-      :content="translate('Password and confirm password are not the same, please check','密码和确认密码不一致，请检查')"
-      type="error"
-      color="red"
-      :button="[{
-        text: translate('OK', '好的'),
-        color: 'red',
-        grow: true,
-        event: 'okEvent',
-      }]"
-      @ok-event="ok"/>
 </template>
 
 <script setup>
 import {translate} from "@/utility/language";
-import Dialog from "@/components/Dialog/Dialog.vue";
 import {ref} from "vue";
 import {session_sign_up} from "@/utility/backend";
 import {get_cookie} from "@/utility/session";
+import {alert_operator, dialog_operator} from "@/utility/components_common";
+import {useRouter} from "vue-router";
 
 
-const show_same_dialog = ref(false);
+const shake_running = ref(false);
+
 
 async function sign_up(){
   document.querySelectorAll('input').forEach(e => e.reportValidity());
+
+  let terms = document.getElementById("terms");
+  if(!terms.checked){
+    shake_running.value = true;
+    setTimeout(()=>{shake_running.value=false}, 1000);
+    return;
+  }
 
   let account = document.getElementById("account").value;
   let password = document.getElementById("password").value;
   let confirm_password = document.getElementById("confirm-password").value;
 
-  if(confirm_password !== password){
-    show_same_dialog.value = true;
+  if(password==="" || confirm_password==="" || account===""){
     return;
   }
-  await session_sign_up({
+
+  if(confirm_password !== password){
+    let dialog_id = dialog_operator.once_dialog_id;
+    let btn = dialog_operator.create_button(translate("OK","好的"), 'red', () => close_dialog_and_reset_password(dialog_id));
+    dialog_operator.push_dialog(dialog_id,
+        translate("Passwords Not The Same", "密码不同"),
+        translate("The passwords inputted twice are not the same, please check and input again.","两次输入的密码不一致，请检查后重新输入。"), 'warn', 'red', 0, [btn]);
+    return;
+  }
+  let result = await session_sign_up({
     account,
     password,
     default_language:get_cookie("lang")
   })
-
+  if(result.status_code !== 0){
+    alert_operator.push_alert("warn", translate(`Failed to sign up, reason: ${result.status_message}`, `注册失败，原因：${result.status_message}`));
+  }else{
+    let dialog_id = dialog_operator.once_dialog_id;
+    let btn = dialog_operator.create_button(translate("Go","出发"), 'blue', () => close_dialog_and_push_to_login(dialog_id));
+    dialog_operator.push_dialog(dialog_id,
+        translate("Success to Sign Up", "注册成功"),
+        translate("Click button for redirecting to login page","点击按钮进入登陆界面"), 'ok', 'blue', 0, [btn]);
+  }
 }
 
-function ok(){
+function close_dialog_and_reset_password(dialog_id) {
   document.getElementById("password").value = "";
-  document.getElementById("confirm-password").value = "";
-  show_same_dialog.value = false;
+  document.getElementById("confirm-password").value="";
+  dialog_operator.close_dialog(dialog_id);
+}
+
+function close_dialog_and_push_to_login(dialog_id) {
+  dialog_operator.close_dialog(dialog_id);
+  useRouter().push("/login");
 }
 
 </script>
 
 <style scoped>
-
+.shake {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+}
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
 </style>

@@ -3,7 +3,7 @@
   <nav class="hidden md:flex flex-row justify-between items-center bg-gray-300/30 text-black absolute h-12 w-full space-x-2 px-3 not-select z-10">
 <!--logo-->
     <div class="w-10 text-center">
-      <a href="/">
+      <a href="/public">
       <img src="../assets/img/logo.png" class="w-8 mx-auto brightness-90 hover:brightness-100" alt="logo"/>
       </a>
     </div>
@@ -75,7 +75,7 @@
   <nav class="flex flex-col md:hidden not-select justify-between items-center bg-gray-300/50 w-full py-2 px-0 space-x-2 z-10 not-select" :class="{absolute:!show_mobile_menu}">
     <div class="flex flex-row justify-between items-center w-full">
       <div class="w-16 ml-2 origin-left	duration-300 ease-in-out transition grow" :class="{move_to_center:show_mobile_menu}">
-        <a href="/">
+        <a href="/public">
           <img src="../assets/img/logo.png" class="w-8 ml-2 brightness-90 hover:brightness-100" alt="logo"/>
         </a>
       </div>
@@ -151,10 +151,10 @@
 <script setup>
   import {onMounted, ref, watchEffect} from "vue";
   import {listen_click} from "@/utility/utility";
-  import {get_cookie, user_info} from "@/utility/session";
+  import {user_info} from "@/utility/session";
   import {language, translate} from "@/utility/language";
   import {useRouter} from "vue-router";
-  import Dialog from "@/components/Dialog/Dialog.vue";
+  import Dialog from "@/components/Common/Dialog.vue";
 
   //Global Variable
   const router = useRouter();

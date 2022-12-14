@@ -3,12 +3,8 @@ import {language} from "@/utility/language";
 
 const api = "/api"
 
-
 async function do_fetch(url, option){
-    if(!url.startsWith("/api")){
-        url = `${api}${url}`;
-    }
-    let result = await fetch(`${url}?lang=${language.value}`, option)
+    let result = await fetch(`${api}${url}?lang=${language.value}`, option)
     if(result.status !== 200){
         throw Error(result.statusText);
     }
