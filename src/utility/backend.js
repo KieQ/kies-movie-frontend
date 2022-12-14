@@ -3,9 +3,7 @@ import {language} from "@/utility/language";
 
 const api = "/api"
 
-
 async function do_fetch(url, option){
-    option.credentials= 'include';
     let result = await fetch(`${api}${url}?lang=${language.value}`, option)
     if(result.status !== 200){
         throw Error(result.statusText);
