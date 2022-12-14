@@ -16,6 +16,10 @@
               <input type="text" name="account" id="account" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="bear" required="">
             </div>
             <div>
+              <label for="nick_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translate("Nickname", "昵称")}}</label>
+              <input type="text" name="nick_name" id="nick_name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="bear" required="">
+            </div>
+            <div>
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{translate("Password", "密码")}}</label>
               <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
             </div>
@@ -53,7 +57,7 @@ import {useRouter} from "vue-router";
 
 
 const shake_running = ref(false);
-
+const router = useRouter();
 
 async function sign_up(){
   document.querySelectorAll('input').forEach(e => e.reportValidity());
@@ -67,6 +71,7 @@ async function sign_up(){
 
   let account = document.getElementById("account").value;
   let password = document.getElementById("password").value;
+  let nick_name = document.getElementById("nick_name").value;
   let confirm_password = document.getElementById("confirm-password").value;
 
   if(password==="" || confirm_password==="" || account===""){
@@ -84,10 +89,11 @@ async function sign_up(){
   let result = await session_sign_up({
     account,
     password,
+    nick_name,
     default_language:get_cookie("lang")
   })
   if(result.status_code !== 0){
-    alert_operator.push_alert("warn", translate(`Failed to sign up, reason: ${result.status_message}`, `注册失败，原因：${result.status_message}`));
+    alert_operator.push_alert("error", translate(`Failed to sign up, reason: ${result.status_message}`, `注册失败，原因：${result.status_message}`));
   }else{
     let dialog_id = dialog_operator.once_dialog_id;
     let btn = dialog_operator.create_button(translate("Go","出发"), 'blue', () => close_dialog_and_push_to_login(dialog_id));
@@ -105,7 +111,7 @@ function close_dialog_and_reset_password(dialog_id) {
 
 function close_dialog_and_push_to_login(dialog_id) {
   dialog_operator.close_dialog(dialog_id);
-  useRouter().push("/login");
+  router.push("/login");
 }
 
 </script>

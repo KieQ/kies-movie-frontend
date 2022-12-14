@@ -23,6 +23,7 @@ function parse_jwt (token) {
 
 export function update_user_info(){
     let token = get_cookie("Token");
+    console.log(document.cookie);
     if(token){
         let payload = parse_jwt(token)
         if(payload.exp < Math.floor(Date.now() / 1000)){

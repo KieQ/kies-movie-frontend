@@ -2,8 +2,10 @@ import {update_user_info} from "@/utility/session";
 import {language} from "@/utility/language";
 
 const api = "/api"
+// const api = "http://localhost:8080"
 
 async function do_fetch(url, option){
+    option.credentials= 'include';
     let result = await fetch(`${api}${url}?lang=${language.value}`, option)
     if(result.status !== 200){
         throw Error(result.statusText);
@@ -17,17 +19,15 @@ export async function get_homepage_content(){
 }
 
 export async function session_sign_up(user_info){
-    let result = await do_fetch(`/session/sign_up`, {
+    return await do_fetch(`/session/sign_up`, {
         method: "POST",
         body: JSON.stringify(user_info)
-    })
-    return await result.json();
+    });
 }
 
 export async function session_log_in(account, password, remember_me){
-    let result = await do_fetch(`/session/log_in`, {
+    return await do_fetch(`/session/log_in`, {
         method: "POST",
         body: JSON.stringify({account, password, remember_me})
-    })
-    return await result.json();
+    });
 }

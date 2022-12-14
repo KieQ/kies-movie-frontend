@@ -17,15 +17,15 @@
           </div>
 
           <div class="flex justify-between space-x-4 items-center mb-6">
-            <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="rememberMeInput"/>
-              <label class="form-check-label inline-block text-gray-800" for="rememberMeInput">{{ translate("Remember me","记住我") }}</label>
+            <div>
+              <input type="checkbox" class="h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="rememberMeInput"/>
+              <label class="inline-block text-gray-800" for="rememberMeInput">{{ translate("Remember me","记住我") }}</label>
             </div>
             <a href="#!" class="text-gray-800">{{ translate("Forgot password?","忘记密码？") }}</a>
           </div>
 
           <div class="text-center lg:text-left">
-            <button type="button" class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+            <button type="button" @click="login" class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
               {{ translate("Login","登陆") }}
             </button>
             <p class="text-sm  mt-2 pt-1 mb-0">
@@ -41,6 +41,39 @@
 
 <script setup>
 import {translate} from "@/utility/language";
+import {session_log_in} from "@/utility/backend";
+import {alert_operator, dialog_operator} from "@/utility/components_common";
+import {useRouter} from "vue-router";
+
+async function login() {
+  document.querySelectorAll('input').forEach(e => e.reportValidity());
+  let account = document.getElementById("account").value;
+  let password = document.getElementById("password").value;
+  let remember_me = document.getElementById("rememberMeInput").checked;
+
+  if(account === "" ||password=== ""){
+    return;
+  }
+
+  let result = await session_log_in(account, password, remember_me);
+  if(result.status_code !== 0){
+    alert_operator.push_alert("error", translate(`Failed to log in, reason: ${result.status_message}`, `登陆失败，原因：${result.status_message}`));
+  }else{
+    let dialog_id = dialog_operator.once_dialog_id;
+    let btn = dialog_operator.create_button(translate("Go","出发"), 'blue', () => success_login(dialog_id));
+    dialog_operator.push_dialog(dialog_id,
+        translate(`Welcome, ${result.data.nick_name}`, `欢迎，${result.data.nick_name}`),
+        translate("Click button for redirecting to homepage","点击按钮进入主页"), 'ok', 'blue', 0, [btn]);
+  }
+}
+
+const router = useRouter();
+
+function success_login(dialog_id){
+  dialog_operator.close_dialog(dialog_id);
+  router.push("/");
+}
+
 </script>
 
 <style scoped>
