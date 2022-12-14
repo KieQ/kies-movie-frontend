@@ -14,5 +14,5 @@ export function translate(en, zh){
     return ""
 }
 watch(language, ()=>{
-    document.cookie += `;lang=${language.value}`
+    document.cookie = `lang=${language.value}`
 })
