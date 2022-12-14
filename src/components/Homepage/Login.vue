@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row justify-center items-center h-full text-gray-800">
+  <div class="flex flex-row justify-center items-center h-full w-full text-gray-800">
     <div class="flex flex-col md:flex-row justify-center md:justify-around items-center flex-wrap h-full g-6">
       <div class="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" class="w-full" alt="Login Page"/>
