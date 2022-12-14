@@ -2,7 +2,7 @@ import {update_user_info} from "@/utility/session";
 import {language} from "@/utility/language";
 
 const api = "/api"
-// const api = "http://localhost:8080"
+
 
 async function do_fetch(url, option){
     option.credentials= 'include';
