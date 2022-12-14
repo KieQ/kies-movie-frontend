@@ -1,14 +1,14 @@
 import {update_user_info, user_info} from "@/utility/session";
 import {language} from "@/utility/language";
 
-// const api = "/api"
+const api = "/api"
 
-//TODO Debug code, delete later
-const api = "http://localhost:8080"
+// //TODO Debug code, delete later
+// const api = "http://localhost:8080"
 
 async function do_fetch(url, option){
-    //TODO Debug code, delete later
-    option = Object.assign(option||{}, {credentials:"include"})
+    // //TODO Debug code, delete later
+    // option = Object.assign(option||{}, {credentials:"include"})
 
     let result = await fetch(`${api}${url}?lang=${language.value}`, option)
     if(result.status !== 200){
