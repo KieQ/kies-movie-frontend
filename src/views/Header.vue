@@ -129,9 +129,9 @@
             </a>
           </li>
           <li class="p-2 w-60 text-center" v-if="user_info.login">
-            <a class="text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="/logout">
+            <button @click="logout" class="text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0">
               {{translate("Logout","退出")}}
-            </a>
+            </button>
           </li>
         </ul>
       </div>
@@ -206,9 +206,9 @@
   async function logout() {
     let result = await session_log_out();
     if(result.status_code !== 0){
-      alert_operator.push_alert("error", translate(`failed to log out, reason: ${result.status_message}`, `退出登录失败，原因：${result.status_message}`));
+      alert_operator.push_alert("error", translate(`failed to log out, reason: ${result.status_message}`, `退出登录失败，原因：${result.status_message}`),2000);
     }else{
-      alert_operator.push_alert("ok", translate("success to log out", "退出登录成功"));
+      alert_operator.push_alert("ok", translate("success to log out", "退出登录成功"),2000);
     }
     setTimeout(()=>{
       window.location.replace("/");
