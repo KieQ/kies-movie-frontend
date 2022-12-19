@@ -1,5 +1,4 @@
 import {update_user_info, user_info} from "@/utility/session";
-import {language} from "@/utility/language";
 
 const api = "/api"
 
@@ -10,7 +9,7 @@ async function do_fetch(url, option){
     // //TODO Debug code, delete later
     // option = Object.assign(option||{}, {credentials:"include"})
 
-    let result = await fetch(`${api}${url}?lang=${language.value}`, option)
+    let result = await fetch(`${api}${url}`, option)
     if(result.status !== 200){
         throw Error(result.statusText);
     }
@@ -55,3 +54,41 @@ export async function user_update(account, update_data){
     })
 }
 
+export async function video_add(data){
+    return await do_fetch("/video/add", {
+        method: "POST",
+        body: data
+    })
+}
+
+export async function video_delete(id){
+    return await do_fetch("/video/delete", {
+        method: "POST",
+        body: JSON.stringify({
+            id
+        })
+    });
+}
+
+export async function video_like(id, liked){
+    return await do_fetch("/video/like", {
+        method:"POST",
+        body: JSON.stringify({
+            id,
+            liked
+        })
+    });
+}
+
+
+export async function video_list(page, size){
+    return await do_fetch("/video/list?" + new URLSearchParams({
+        page, size
+    }));
+}
+
+export async function not_login_video_list(page, size){
+    return await do_fetch("/video/not_login/list?" + new URLSearchParams({
+        page, size
+    }));
+}

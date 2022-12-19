@@ -2,7 +2,8 @@ import {reactive} from "vue";
 
 export const user_info = reactive({
     login: false,
-    account: ""
+    account: "",
+    profile: ""
 })
 
 
@@ -28,6 +29,7 @@ export function update_user_info(){
         if(payload.exp < Math.floor(Date.now() / 1000)){
             user_info.login = false;
             user_info.account = "";
+            user_info.profile = "";
         }else{
             user_info.login = true;
             user_info.account=payload.account;

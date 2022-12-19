@@ -1,6 +1,6 @@
 <template>
 <!--navbar for PC-->
-  <nav class="hidden md:flex flex-row justify-between items-center bg-gray-300/30 text-black absolute h-12 w-full space-x-2 px-3 not-select z-10">
+  <nav class="hidden md:flex flex-row justify-between items-center bg-gray-300/30 text-black absolute h-12 w-full space-x-2 px-3 select-none z-50">
 <!--logo-->
     <div class="w-10 text-center">
       <a href="/">
@@ -28,7 +28,7 @@
           <div class="flex flex-row justify-center items-center">
             <select class="w-full rounded-lg w-auto focus:outline-none bg-white/80" v-model="language">
               <option selected value="en">English</option>
-              <option value="zh-cn">中文</option>
+              <option value="zh">中文</option>
             </select>
           </div>
         </div>
@@ -72,11 +72,12 @@
 
 
 <!--navbar for Mobile-->
-  <nav class="flex flex-col md:hidden not-select justify-between items-center bg-gray-300/50 w-full py-2 px-0 space-x-2 z-10 not-select" :class="{absolute:!show_mobile_menu}">
+  <nav class="flex flex-col md:hidden select-none justify-between items-center bg-gray-300/50 w-full py-2 px-0 space-x-2 z-50 select-none max-w-full" :class="{absolute:!show_mobile_menu}">
     <div class="flex flex-row justify-between items-center w-full">
       <div class="w-16 ml-2 origin-left	duration-300 ease-in-out transition grow" :class="{move_to_center:show_mobile_menu}">
         <a href="/">
-          <img src="../assets/img/logo.png" class="w-8 ml-2 brightness-90 hover:brightness-100" alt="logo"/>
+          <img v-if="user_info.profile === ''" src="../assets/img/logo.png" class="w-8 ml-2 brightness-90 hover:brightness-100" alt="logo"/>
+          <img v-else :src="user_info.profile" class="w-8 ml-2 brightness-90 hover:brightness-100" alt="logo"/>
         </a>
       </div>
 
@@ -98,7 +99,7 @@
               <div class="flex flex-row justify-center items-center">
                 <select class="mx-auto rounded-lg w-24 focus:outline-none bg-white/80" v-model="language">
                   <option selected value="en">English</option>
-                  <option value="zh-cn">中文</option>
+                  <option value="zh">中文</option>
                 </select>
               </div>
             </div>
@@ -210,18 +211,16 @@
     }else{
       alert_operator.push_alert("ok", translate("success to log out", "退出登录成功"),2000);
     }
-    setTimeout(()=>{
-      window.location.replace("/");
+    setTimeout(async()=>{
+      await router.push("/");
       window.location.reload();
-    }, 3000);
+    },2000)
+
   }
 
 </script>
 
 <style scoped>
-.not-select {
-  user-select: none;
-}
 
 .profile-fade-enter-active {
   transition: all 0.3s ease-out;

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row justify-center items-center h-full w-full text-gray-800">
+  <div class="grow flex flex-row justify-center items-center h-full w-full text-gray-800 bg-gradient-to-br from-purple-200 to-indigo-400">
     <div class="flex flex-col md:flex-row justify-center md:justify-around items-center flex-wrap h-full g-6">
       <div class="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" class="w-full" alt="Login Page"/>
@@ -44,6 +44,7 @@ import {language, translate} from "@/utility/language";
 import {session_log_in} from "@/utility/backend";
 import {alert_operator, dialog_operator} from "@/utility/components_common";
 import {useRouter} from "vue-router";
+import {user_info} from "@/utility/session";
 
 async function login() {
   document.querySelectorAll('input').forEach(e => e.reportValidity());
@@ -61,6 +62,9 @@ async function login() {
   }else{
     if(result.data.default_language !== undefined ){
       language.value = result.data.default_language;
+    }
+    if(result.data.profile !== undefined){
+      user_info.profile = result.data.profile;
     }
     let dialog_id = dialog_operator.once_dialog_id;
     let btn = dialog_operator.create_button(translate("Go","出发"), 'blue', () => success_login(dialog_id));

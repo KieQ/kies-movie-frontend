@@ -1,9 +1,9 @@
 <template>
-  <div v-if="dialog_operator.dialogs.size>0" class="fixed w-full h-screen flex flex-row justify-center items-center bg-gray-700/30 z-50 not-select">
+  <div v-if="dialog_operator.dialogs.size>0" class="fixed w-full h-screen flex flex-row justify-center items-center bg-gray-700/30 z-50 select-none">
   </div>
   <TransitionGroup name="bounce">
     <template v-for="[key, item] of dialog_operator.dialogs.entries()" :key="key">
-      <div class="fixed w-full h-screen flex flex-row justify-center items-center z-50 not-select">
+      <div class="fixed w-full h-screen flex flex-row justify-center items-center z-50 select-none">
         <div class=" p-5 border w-11/12 md:w-96 shadow-lg rounded-md bg-white">
           <div class="mt-3 text-center">
             <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full" :class="get_color(item.color, 0)">
@@ -70,9 +70,6 @@ function handle_click(callback, ...param){
 </script>
 
 <style scoped>
-.not-select {
-  user-select: none;
-}
 
 .bounce-enter-active {
   animation: bounce-in 0.5s;

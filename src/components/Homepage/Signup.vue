@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-gray-50 dark:bg-gray-900 h-full">
+  <section class="grow bg-gray-50 dark:bg-gray-900 pt-24 bg-gradient-to-br from-purple-200 to-indigo-400">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-full lg:py-0">
       <a href="/" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
         <img class="w-8 h-8 mr-2" src="../../assets/img/logo.png" alt="logo">

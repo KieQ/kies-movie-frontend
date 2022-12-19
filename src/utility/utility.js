@@ -21,11 +21,3 @@ export function listen_click(ids, click_in, click_out){
         }
     });
 }
-
-
-export function wrap_if_too_long(content, length){
-    if(content.length > length){
-        return content.substring(0, length) + "...";
-    }
-    return content;
-}

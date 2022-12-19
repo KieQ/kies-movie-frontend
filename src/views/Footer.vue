@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-gray-200 text-center lg:text-left z-10 not-select">
+  <footer class="mt-auto bg-gradient-to-br from-white to-indigo-400 text-center lg:text-left z-50 select-none">
     <div class="text-gray-700 text-center p-4" style="background-color: rgba(0, 0, 0, 0.2);">
       © 2023 Copyright:
       <a class="text-gray-800" href="/">Kie</a>
@@ -12,7 +12,5 @@
 </script>
 
 <style scoped>
-.not-select {
-  user-select: none;
-}
+
 </style>
