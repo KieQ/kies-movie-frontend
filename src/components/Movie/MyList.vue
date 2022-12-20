@@ -1,15 +1,15 @@
 <template>
-  <div class="mt-6 rounded-3xl transition duration-300 p-6">
+  <div class="mt-6 rounded-3xl transition duration-300 md:p-6">
     <h2 class="px-8 text-xl font-semibold text-gray-800">{{translate("My Movie List", "我的电影列表")}}</h2>
     <ul>
-      <li class="flex flex-col px-1 sm:px-8 py-3 items-center mt-3 bg-purple-50 rounded-lg" v-for="item of my_list" :key="item.id">
+      <li class="flex flex-col px-1 md:px-8 py-3 items-center mt-3 bg-purple-50 rounded-lg" v-for="item of my_list" :key="item.id">
         <div class="w-full flex flex-row items-center ">
 <!--          Image-->
           <div class="h-32 w-24">
             <img :src="item.poster_path" class="h-full overflow-hidden object-cover	">
           </div>
 <!--          Content-->
-          <div class="h-32 grow py-2 sm:px-3">
+          <div class="h-32 grow py-2 md:px-3">
             <div class="w-full h-full flex flex-col">
               <div class="flex flex-row space-x-4 items-center">
                 <h2 class="font-bold">{{item.title}}</h2>
@@ -49,7 +49,7 @@
             </div>
           </div>
 <!--          Buttons-->
-          <div class="sm:pl-6 h-32 w-16 sm:w-32 flex flex-col justify-center items-start space-y-1">
+          <div class="lg:pl-6 h-32 w-16 lg:w-32 flex flex-col justify-center items-start space-y-1">
             <button class="text-blue-600 hover:text-blue-800 flex items-center space-x-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2" viewBox="0 0 16 16">
                 <path d="M3.5 2a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-12a.5.5 0 0 0-.5-.5H12a.5.5 0 0 1 0-1h.5A1.5 1.5 0 0 1 14 2.5v12a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-12A1.5 1.5 0 0 1 3.5 1H4a.5.5 0 0 1 0 1h-.5Z"/>
@@ -89,7 +89,7 @@
 import {translate} from "@/utility/language";
 import {onMounted, ref} from "vue";
 import {video_delete, video_like, video_list} from "@/utility/backend";
-import {alert_operator} from "@/utility/components_common";
+import {alert_operator, dialog_operator} from "@/utility/components_common";
 
 const page = ref(0);
 const size = ref(10);
@@ -131,15 +131,25 @@ function click_add_to_my_list(item){
 }
 
 async function click_delete_video(item){
-  let result = await video_delete(item.id)
-  if(result.status_code !== 0){
-    alert_operator.push_alert("error", translate(`failed to delete video, reason: ${result.status_message}`, `删除视频失败，原因：${result.status_message}`))
-  }else{
-    alert_operator.push_alert("ok", translate(`success to delete video`, `成功删除视频`))
-    setTimeout(()=>{
-      window.location.reload();
-    }, 2000);
-  }
+  let dialog_id = dialog_operator.once_dialog_id;
+  let yes_btn = dialog_operator.create_button(translate("Yes", "确定"),"red",async ()=>{
+    let result = await video_delete(item.id)
+    if(result.status_code !== 0){
+      alert_operator.push_alert("error", translate(`failed to delete video, reason: ${result.status_message}`, `删除视频失败，原因：${result.status_message}`))
+    }else{
+      alert_operator.push_alert("ok", translate(`success to delete video`, `成功删除视频`))
+      setTimeout(()=>{
+        window.location.reload();
+      }, 2000);
+    }
+    dialog_operator.close_dialog(dialog_id);
+  });
+  let no_btn = dialog_operator.create_button(translate("No", "不了"), "blue", ()=>{
+    dialog_operator.close_dialog(dialog_id);
+  });
+
+  dialog_operator.push_dialog(dialog_id, translate("Confirm to Delete?", "确认删除？"),
+  translate("All the information about this video will be deleted, do you confirm to continue?", "关于此资源的所有信息将被删除，确认继续进行？"),"warn", "blue",0, [yes_btn, no_btn]);
 }
 
 </script>

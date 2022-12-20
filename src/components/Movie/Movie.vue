@@ -1,6 +1,6 @@
 <template>
-  <div class="grow flex items-start pt-12 bg-gradient-to-br from-purple-200 to-indigo-400">
-    <div class="mx-auto w-full px-8">
+  <div class="grow flex items-start pt-12 bg-gradient-to-br from-purple-200 to-indigo-400 outline-none">
+    <div class="mx-auto w-full md:px-8">
       <div class="w-full mx-auto">
         <div class="relative w-max mx-auto h-12 grid grid-cols-3 items-center px-[3px] rounded-full bg-gray-900/20 overflow-hidden shadow-2xl shadow-900/20 transition">
           <div id="indicator" class="absolute indicator h-11 my-auto top-0 bottom-0 left-0 rounded-full bg-white shadow-md"></div>

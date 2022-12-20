@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-6 rounded-3xl transition duration-300 p-6 h-full">
+  <div class="mt-6 rounded-3xl transition duration-300 md:p-6 h-full">
     <h2 class="px-8 text-xl font-semibold text-gray-800">{{ translate("Add Movie","添加电影") }}</h2>
-    <div class="flex flex-col px-8 py-3 h-full min-w-fit items-center mt-3 bg-purple-50 rounded-lg space-y-4">
+    <div class="flex flex-col px-1 md:px-8 py-3 h-full min-w-fit items-center mt-3 bg-purple-50 rounded-lg space-x-1 md:space-y-4">
       <div class="flex flex-row items-center justify-start w-full space-x-4">
         <label for="name" class="w-24 text-center text-md font-medium text-gray-900 dark:text-white">{{translate("Name", "名字")}}<span class="text-red-600">*</span></label>
         <input id="name" type="text" class="px-2 grow border-[1px] border-black rounded-lg" v-model="video.name"/>
