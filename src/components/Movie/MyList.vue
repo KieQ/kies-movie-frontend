@@ -3,10 +3,10 @@
     <h2 class="px-8 text-xl font-semibold text-gray-800">{{translate("My Movie List", "我的电影列表")}}</h2>
     <ul>
       <li class="flex flex-col px-1 md:px-8 py-3 items-center mt-3 bg-purple-50 rounded-lg" v-for="item of my_list" :key="item.id">
-        <div class="w-full flex flex-row items-center ">
+        <div class="w-full flex flex-row items-center space-x-1">
 <!--          Image-->
-          <div class="h-32 w-24">
-            <img :src="item.poster_path" class="h-full overflow-hidden object-cover	">
+          <div class="h-32 w-24 shrink-0">
+            <img :src="item.poster_path" class="h-full mx-auto overflow-hidden object-cover	">
           </div>
 <!--          Content-->
           <div class="h-32 grow py-2 md:px-3">
@@ -32,8 +32,8 @@
                   </Transition>
                 </button>
               </div>
-              <div class="grow w-full mt-1">
-                <p class="text-sm line-clamp-3">
+              <div class="grow mt-1">
+                <p class="text-xs md:text-sm line-clamp-3">
                   {{item.description}}
                 </p>
               </div>
@@ -49,7 +49,7 @@
             </div>
           </div>
 <!--          Buttons-->
-          <div class="lg:pl-6 h-32 w-16 lg:w-32 flex flex-col justify-center items-start space-y-1">
+          <div class="h-32 w-16 flex flex-col justify-center items-start space-y-1 shrink-0">
             <button class="text-blue-600 hover:text-blue-800 flex items-center space-x-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2" viewBox="0 0 16 16">
                 <path d="M3.5 2a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-12a.5.5 0 0 0-.5-.5H12a.5.5 0 0 1 0-1h.5A1.5 1.5 0 0 1 14 2.5v12a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-12A1.5 1.5 0 0 1 3.5 1H4a.5.5 0 0 1 0 1h-.5Z"/>
@@ -155,6 +155,12 @@ async function click_delete_video(item){
 </script>
 
 <style scoped>
+* {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;

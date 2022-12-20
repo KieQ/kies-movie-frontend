@@ -1,5 +1,5 @@
 <template>
-  <div class="grow flex items-start pt-12 bg-gradient-to-br from-purple-200 to-indigo-400 outline-none">
+  <div class="grow flex items-start pt-12 bg-gradient-to-br from-purple-200 to-indigo-400">
     <div class="mx-auto w-full md:px-8">
       <div class="w-full mx-auto">
         <div class="relative w-max mx-auto h-12 grid grid-cols-3 items-center px-[3px] rounded-full bg-gray-900/20 overflow-hidden shadow-2xl shadow-900/20 transition">
@@ -65,6 +65,11 @@ watch(language, (new_value, old_value)=>{
 <style scoped>
 .indicator{
   transition: left 0.4s ease;
+}
+
+* {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .slide-up-enter-active,

@@ -1,15 +1,15 @@
 <template>
-  <div class="mt-6 rounded-3xl transition duration-300 p-6">
+  <div class="mt-6 rounded-3xl transition duration-300 md:p-6">
     <h2 class="px-8 text-xl font-semibold text-gray-800">{{translate("Shared Movie List", "共享电影列表")}}</h2>
     <ul>
       <li class="flex flex-col px-1 md:px-8 py-3 items-center mt-3 bg-purple-50 rounded-lg" v-for="item of public_list" :key="item.id">
         <div class="w-full flex flex-row items-center ">
           <!--          Image-->
-          <div class="h-32 w-24">
-            <img :src="item.poster_path" class="h-full w-full mx-auto overflow-hidden object-cover	">
+          <div class="h-32 w-24 shrink-0">
+            <img :src="item.poster_path" class="h-full mx-auto overflow-hidden object-cover	">
           </div>
           <!--          Content-->
-          <div class="h-32 w-full py-2 md:px-3">
+          <div class="h-32 grow py-2 md:px-3">
             <div class="w-full h-full flex flex-col">
               <div class="flex flex-row space-x-4 items-center">
                 <h2 class="font-bold">{{item.title}}</h2>
@@ -22,8 +22,8 @@
                   </Transition>
                 </button>
               </div>
-              <div class="grow w-full mt-1">
-                <p class="text-sm line-clamp-3">
+              <div class="grow mt-1">
+                <p class="text-xs md:text-sm line-clamp-3">
                   {{item.description}}
                 </p>
               </div>
@@ -42,7 +42,7 @@
             </div>
           </div>
           <!--          User-->
-          <div class="lg:pl-6 h-32 w-16 lg:w-32 flex flex-col justify-center items-center space-y-1">
+          <div class="h-32 w-16 flex flex-col justify-center items-center space-y-1 shrink-0">
             <img :src="item.user_profile" class="rounded-full w-16 h-16 overflow-hidden object-cover" alt="User Profile"/>
             <div>
               {{item.user_name}}
@@ -86,6 +86,13 @@ function click_add_to_my_list(item){
 </script>
 
 <style scoped>
+
+* {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
