@@ -51,6 +51,9 @@
         </div>
       </li>
     </ul>
+
+    <Pagination :total="total" :size="10" :callback="page_changed"></Pagination>
+
   </div>
 </template>
 
@@ -58,8 +61,10 @@
 
 import {translate} from "@/utility/language";
 import {onMounted, ref} from "vue";
-import {not_login_video_list} from "@/utility/backend";
+import {not_login_video_list, video_add, video_clone} from "@/utility/backend";
 import {alert_operator} from "@/utility/components_common";
+import {user_info} from "@/utility/session";
+import Pagination from "@/components/Common/Pagination.vue";
 
 const public_list = ref([])
 const page = ref(0);
@@ -70,17 +75,32 @@ onMounted(async ()=>{
   await get_video_list(page.value, size.value);
 })
 
+function page_changed(value){
+  page.value =value;
+  get_video_list(page.value, size.value);
+}
+
 async function get_video_list(page, size){
   let result = await not_login_video_list(page, size);
   if(result.status_code !== 0){
     alert_operator.push_alert("error", translate(`failed to get video list, reason: ${result.status_message}`, `获取视频列表失败，原因：${result.status_message}`))
+    return;
   }
   public_list.value = result.data.items;
   total.value = result.data.total;
 }
 
-function click_add_to_my_list(item){
-
+async function click_add_to_my_list(item){
+  if(!user_info.login){
+    alert_operator.push_alert("warn", translate("You are not logged in, please login first", "你未登陆，请登录后操作"))
+    return;
+  }
+  let result = await video_clone(item.id);
+  if(result.status_code !== 0){
+    alert_operator.push_alert("error", translate(`Failed to add video, reason:${result.status_message}`, `添加视频失败，理由:${result.status_message}`));
+  }else{
+    alert_operator.push_alert("ok", translate(`Success to add video`, `添加视频成功`));
+  }
 }
 
 </script>

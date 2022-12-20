@@ -15,7 +15,7 @@
                 <h2 class="font-bold">{{item.title}}</h2>
                 <button @click="click_liked(item)" v-if="item.liked !== undefined">
                   <Transition name="fade" mode="out-in" appear>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart text-red-500" viewBox="0 0 16 16" v-if="item.liked">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart text-red-500" viewBox="0 0 16 16" v-if="!item.liked">
                       <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                     </svg>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill text-red-500" viewBox="0 0 16 16" v-else>
@@ -81,15 +81,19 @@
         </div>
       </li>
     </ul>
+
+    <Pagination :total="total" :size="10" :callback="page_changed"></Pagination>
   </div>
 </template>
 
 <script setup>
 
 import {translate} from "@/utility/language";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {video_delete, video_like, video_list} from "@/utility/backend";
 import {alert_operator, dialog_operator} from "@/utility/components_common";
+import {useRouter} from "vue-router";
+import Pagination from "@/components/Common/Pagination.vue";
 
 const page = ref(0);
 const size = ref(10);
@@ -97,6 +101,11 @@ const total = ref(0);
 
 const my_list = ref([])
 
+
+function page_changed(value){
+  page.value =value;
+  get_video_list(page.value, size.value);
+}
 
 onMounted(async ()=>{
   await get_video_list(page.value, size.value);
@@ -106,6 +115,7 @@ async function get_video_list(page, size){
   let result = await video_list(page, size);
   if(result.status_code !== 0){
     alert_operator.push_alert("error", translate(`failed to get video list, reason: ${result.status_message}`, `获取视频列表失败，原因：${result.status_message}`))
+    return;
   }
   my_list.value = result.data.items;
   total.value = result.data.total;
@@ -123,10 +133,6 @@ async function click_liked(item){
 }
 
 function click_download(item){
-
-}
-
-function click_add_to_my_list(item){
 
 }
 

@@ -1,13 +1,13 @@
 import {update_user_info, user_info} from "@/utility/session";
 
-// const api = "/api"
+const api = "/api"
 
-//TODO Debug code, delete later
-const api = "http://localhost:8080"
+// //TODO Debug code, delete later
+// const api = "http://localhost:8080"
 
 async function do_fetch(url, option){
-    //TODO Debug code, delete later
-    option = Object.assign(option||{}, {credentials:"include"})
+    // //TODO Debug code, delete later
+    // option = Object.assign(option||{}, {credentials:"include"})
 
     let result = await fetch(`${api}${url}`, option)
     if(result.status !== 200){
@@ -79,6 +79,16 @@ export async function video_like(id, liked){
         })
     });
 }
+
+export async function video_clone(id){
+    return await do_fetch("/video/clone", {
+        method:"POST",
+        body: JSON.stringify({
+            id
+        })
+    });
+}
+
 
 
 export async function video_list(page, size){
