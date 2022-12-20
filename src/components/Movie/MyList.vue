@@ -2,14 +2,14 @@
   <div class="mt-6 rounded-3xl transition duration-300 p-6">
     <h2 class="px-8 text-xl font-semibold text-gray-800">{{translate("My Movie List", "我的电影列表")}}</h2>
     <ul>
-      <li class="flex flex-col px-8 py-3 items-center mt-3 bg-purple-50 rounded-lg" v-for="item of my_list" :key="item.id">
+      <li class="flex flex-col px-1 sm:px-8 py-3 items-center mt-3 bg-purple-50 rounded-lg" v-for="item of my_list" :key="item.id">
         <div class="w-full flex flex-row items-center ">
 <!--          Image-->
           <div class="h-32 w-24">
-            <img :src="item.poster_path" class="h-full mx-auto overflow-hidden object-cover	">
+            <img :src="item.poster_path" class="h-full overflow-hidden object-cover	">
           </div>
 <!--          Content-->
-          <div class="h-32 w-full py-2 px-3">
+          <div class="h-32 grow py-2 sm:px-3">
             <div class="w-full h-full flex flex-col">
               <div class="flex flex-row space-x-4 items-center">
                 <h2 class="font-bold">{{item.title}}</h2>
@@ -49,7 +49,7 @@
             </div>
           </div>
 <!--          Buttons-->
-          <div class="pl-6 h-32 w-32 flex flex-col justify-center items-start space-y-1">
+          <div class="sm:pl-6 h-32 w-16 sm:w-32 flex flex-col justify-center items-start space-y-1">
             <button class="text-blue-600 hover:text-blue-800 flex items-center space-x-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2" viewBox="0 0 16 16">
                 <path d="M3.5 2a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-12a.5.5 0 0 0-.5-.5H12a.5.5 0 0 1 0-1h.5A1.5 1.5 0 0 1 14 2.5v12a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-12A1.5 1.5 0 0 1 3.5 1H4a.5.5 0 0 1 0 1h-.5Z"/>
