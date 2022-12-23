@@ -1,7 +1,7 @@
 <template>
-  <div class="grow flex items-start pt-12 bg-gradient-to-br from-purple-200 to-indigo-400">
-    <div class="mx-auto w-full md:px-8">
-      <div class="w-full mx-auto">
+  <div class="grow flex flex-col items-start pt-12 bg-gradient-to-br from-purple-200 to-indigo-400">
+    <div class="mx-auto w-full grow flex flex-col md:px-8">
+      <div class="w-full grow mx-auto flex flex-col">
         <div class="relative w-max mx-auto h-12 grid items-center px-[3px] rounded-full bg-gray-900/20 overflow-hidden shadow-2xl shadow-900/20 transition" :class="{'grid-cols-3':user_info.login}">
           <div id="indicator" class="absolute indicator h-11 my-auto top-0 bottom-0 left-0 rounded-full bg-white shadow-md"></div>
           <button class="tab relative block h-10 px-6 md:px-16 rounded-full" :class="{'hover:bg-purple-500/30':active_btn_id!==0}" @click="tab_clicked(0)" v-show="user_info.login">
@@ -15,7 +15,7 @@
           </button>
         </div>
 
-        <div class="w-full relative">
+        <div class="w-full grow flex flex-col relative">
           <Transition name="slide-up" mode="out-in">
             <MyList v-if="active_btn_id===0 && user_info.login"></MyList>
             <AddMovie v-else-if="active_btn_id===1 && user_info.login"></AddMovie>

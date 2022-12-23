@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-6 rounded-3xl transition duration-300 md:p-6">
+  <div class="mt-6 rounded-3xl transition duration-300 md:p-6 flex flex-col grow">
     <h2 class="px-8 text-xl font-semibold text-gray-800">{{translate("Shared Movie List", "共享电影列表")}}</h2>
-    <ul>
+    <ul class="grow">
       <li class="flex flex-col px-1 md:px-8 py-3 items-center mt-3 bg-purple-50 rounded-lg" v-for="item of public_list" :key="item.id">
         <div class="w-full flex flex-row items-center ">
           <!--          Image-->
@@ -31,10 +31,10 @@
                 <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-gray-700 text-blue-200">{{item.region.toUpperCase()}}</div>
                 <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-purple-100" v-if="item.video_type===0">MOVIE</div>
                 <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-purple-100" v-if="item.video_type===1">TV</div>
-                <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-teal-100" v-if="item.status===0">{{translate("No Resource", "无资源")}}</div>
-                <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-red-100" v-else-if="item.status===1">{{translate("Can Download", "可下载")}}</div>
-                <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-yellow-100" v-else-if="item.status===2">{{translate("Downloading", "下载中")}}</div>
-                <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-green-100" v-else-if="item.status===3">{{translate("Can Play", "可播放")}}</div>
+                <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-teal-100" v-if="item.download_status===0">{{translate("No Resource", "无资源")}}</div>
+                <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-red-100" v-else-if="item.download_status===1">{{translate("Can Download", "可下载")}}</div>
+                <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-yellow-100" v-else-if="item.download_status===2">{{translate("Downloading", "下载中")}}</div>
+                <div class="rounded-lg p-[2px] text-xs border-[1px] border-black bg-green-100" v-else-if="item.download_status===3">{{translate("Can Play", "可播放")}}</div>
               </div>
               <div>
 

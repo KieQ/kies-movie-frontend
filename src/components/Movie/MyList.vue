@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-6 rounded-3xl transition duration-300 md:p-6">
+  <div class="mt-6 rounded-3xl transition duration-300 md:p-6 flex flex-col grow">
     <h2 class="px-8 text-xl font-semibold text-gray-800">{{translate("My Movie List", "我的电影列表")}}</h2>
-    <ul>
+    <ul class="grow">
       <li class="flex flex-col px-1 md:px-8 py-3 items-center mt-3 bg-purple-50 rounded-lg" v-for="item of my_list" :key="item.id">
         <div class="w-full flex flex-row items-center space-x-1">
 <!--          Image-->
@@ -23,13 +23,16 @@
                     </svg>
                   </Transition>
                 </button>
-                <button @click="click_download(item)" v-if="item.status===1 || item.status===2">
-                  <Transition name="fade" mode="out-in" appear>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-download" :class="{'animate-bounce':item.status===2}" viewBox="0 0 16 16">
+                <button @click="click_download(item)" v-if="item.download_status===1 || item.download_status===2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-download" :class="{'animate-bounce':item.download_status===2}" viewBox="0 0 16 16">
                       <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
                       <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
                     </svg>
-                  </Transition>
+                </button>
+                <button @click="click_download(item)" v-if="item.download_status===3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-download-fill text-green-500" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                  </svg>
                 </button>
               </div>
               <div class="grow mt-1">
@@ -50,7 +53,7 @@
           </div>
 <!--          Buttons-->
           <div class="h-32 w-16 flex flex-col justify-center items-start space-y-1 shrink-0">
-            <button class="text-blue-600 hover:text-blue-800 flex items-center space-x-1">
+            <button @click="click_edit(item)" class="text-blue-600 hover:text-blue-800 flex items-center space-x-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2" viewBox="0 0 16 16">
                 <path d="M3.5 2a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-12a.5.5 0 0 0-.5-.5H12a.5.5 0 0 1 0-1h.5A1.5 1.5 0 0 1 14 2.5v12a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-12A1.5 1.5 0 0 1 3.5 1H4a.5.5 0 0 1 0 1h-.5Z"/>
                 <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5Z"/>
@@ -59,7 +62,7 @@
               {{ translate("Edit", "编辑") }}
               </span>
             </button>
-            <button class="text-blue-600  hover:text-blue-800 flex items-center space-x-1" v-if="item.status===3">
+            <button @click="click_play(item)"  class="text-blue-600  hover:text-blue-800 flex items-center space-x-1" v-if="item.can_play_files && item.can_play_files.length!== 0">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-square" viewBox="0 0 16 16">
                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                 <path d="M5.795 12.456A.5.5 0 0 1 5.5 12V4a.5.5 0 0 1 .832-.374l4.5 4a.5.5 0 0 1 0 .748l-4.5 4a.5.5 0 0 1-.537.082z"/>
@@ -68,7 +71,7 @@
               {{translate("Play","播放")}}
               </span>
             </button>
-            <button class="text-fuchsia-600  hover:text-fuchsia-800 flex items-center space-x-1" @click="click_delete_video(item)">
+            <button @click="click_delete_video(item)" class="text-fuchsia-600  hover:text-fuchsia-800 flex items-center space-x-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -82,25 +85,26 @@
       </li>
     </ul>
 
-    <Pagination :total="total" :size="10" :callback="page_changed"></Pagination>
+    <Pagination class="self-end" :total="total" :size="10" :callback="page_changed"></Pagination>
+    <PlayDialog/>
   </div>
 </template>
 
 <script setup>
 
 import {translate} from "@/utility/language";
-import {computed, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import {video_delete, video_like, video_list} from "@/utility/backend";
 import {alert_operator, dialog_operator} from "@/utility/components_common";
-import {useRouter} from "vue-router";
 import Pagination from "@/components/Common/Pagination.vue";
+import PlayDialog from "@/components/Movie/Dialog/PlayDialog.vue";
+import {play_files, play_show} from "@/utility/movie_dialog";
 
 const page = ref(0);
 const size = ref(10);
 const total = ref(0);
 
 const my_list = ref([])
-
 
 function page_changed(value){
   page.value =value;
@@ -132,8 +136,22 @@ async function click_liked(item){
   }
 }
 
-function click_download(item){
+function click_edit(item){
+  let dialog_id = dialog_operator.once_dialog_id;
+  let ok_btn = dialog_operator.create_button(translate("OK", "好的"), 'blue', ()=>dialog_operator.close_dialog(dialog_id));
+  dialog_operator.push_dialog(dialog_id, translate("Not Implemented",'暂未实现'),translate("This functionality has not been implemented, please wait...", "功能暂未实现，请等待..."), 'info', 'blue', 5000, [ok_btn]);
+}
 
+function click_play(item){
+  play_files.value = item.can_play_files;
+  play_show.value = true;
+}
+
+
+let show_progress_dialog = ref(true);
+let files
+async function click_download(item){
+  show_progress_dialog.value= true;
 }
 
 async function click_delete_video(item){
