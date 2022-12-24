@@ -60,7 +60,7 @@ async function login() {
   if(result.status_code !== 0){
     alert_operator.push_alert("error", translate(`Failed to log in, reason: ${result.status_message}`, `登陆失败，原因：${result.status_message}`));
   }else{
-    if(result.data.default_language !== undefined ){
+    if(result.data.default_language&&result.data.default_language !== ''){
       language.value = result.data.default_language;
     }
     if(result.data.profile !== undefined){
