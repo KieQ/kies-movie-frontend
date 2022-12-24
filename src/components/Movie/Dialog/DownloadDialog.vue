@@ -26,7 +26,8 @@
             <ul class="bg-yellow-100/40 max-h-36 overflow-y-auto rounded-lg">
               <li class="m-1" v-for="(item, idx) of download_files" :key="idx">
                 <input type="checkbox" @change="list_change" :id="`id_${item.display_path}`" :value="item.path" class="hidden peer download_file" required="">
-                <label :for="`id_${item.display_path}`" class="inline-flex justify-between items-center px-5 py-1 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 peer-checked:border-purple-600 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-gray-50">
+                <label :for="`id_${item.display_path}`" class="relative inline-flex justify-between items-center px-5 py-1 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 peer-checked:border-purple-600 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-gray-50">
+                  <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-green-500 to-blue-500 opacity-20" :style="`width:${item.downloaded_bytes*100/item.total_bytes}%`"></div>
                   <div class="block overflow-auto no-scrollbar">
                     {{item.display_path}}
                   </div>
