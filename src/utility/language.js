@@ -10,7 +10,7 @@ export function translate(en, zh){
         case "zh":
             return zh;
     }
-    return "en"
+    return en
 }
 watchEffect(()=>{
     document.cookie = `language=${language.value}`
