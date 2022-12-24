@@ -43,8 +43,9 @@
           </div>
           <!--          User-->
           <div class="h-32 w-16 flex flex-col justify-center items-center space-y-1 shrink-0">
-            <img :src="item.user_profile" class="rounded-full w-16 h-16 overflow-hidden object-cover" alt="User Profile"/>
-            <div>
+            <img v-if="item.user_profile !== ''" :src="item.user_profile" class="rounded-full w-16 h-16 overflow-hidden object-cover" alt="User Profile"/>
+            <img v-else src="../../assets/img/default_profile.jpeg" class="rounded-full w-16 h-16 overflow-hidden object-cover" alt="User Profile"/>
+            <div class="text-center">
               {{item.user_name}}
             </div>
           </div>

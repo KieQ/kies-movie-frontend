@@ -62,7 +62,7 @@
               {{ translate("Edit", "编辑") }}
               </span>
             </button>
-            <button @click="click_play(item)"  class="text-blue-600  hover:text-blue-800 flex items-center space-x-1" v-if="item.can_play_files && item.can_play_files.length!== 0">
+            <button @click="click_play(item)"  class="text-blue-600  hover:text-blue-800 flex items-center space-x-1" v-if="should_show_play_btn(item)">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-square" viewBox="0 0 16 16">
                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                 <path d="M5.795 12.456A.5.5 0 0 1 5.5 12V4a.5.5 0 0 1 .832-.374l4.5 4a.5.5 0 0 1 0 .748l-4.5 4a.5.5 0 0 1-.537.082z"/>
@@ -87,6 +87,7 @@
 
     <Pagination class="self-end" :total="total" :size="10" :callback="page_changed"></Pagination>
     <PlayDialog/>
+    <DownloadDialog/>
   </div>
 </template>
 
@@ -98,13 +99,16 @@ import {video_delete, video_like, video_list} from "@/utility/backend";
 import {alert_operator, dialog_operator} from "@/utility/components_common";
 import Pagination from "@/components/Common/Pagination.vue";
 import PlayDialog from "@/components/Movie/Dialog/PlayDialog.vue";
-import {play_files, play_show} from "@/utility/movie_dialog";
+import {download_id, download_show, play_files, play_show} from "@/utility/movie_dialog";
+import DownloadDialog from "@/components/Movie/Dialog/DownloadDialog.vue";
+import {useRouter} from "vue-router";
 
 const page = ref(0);
 const size = ref(10);
 const total = ref(0);
 
 const my_list = ref([])
+const router = useRouter();
 
 function page_changed(value){
   page.value =value;
@@ -137,21 +141,34 @@ async function click_liked(item){
 }
 
 function click_edit(item){
-  let dialog_id = dialog_operator.once_dialog_id;
-  let ok_btn = dialog_operator.create_button(translate("OK", "好的"), 'blue', ()=>dialog_operator.close_dialog(dialog_id));
-  dialog_operator.push_dialog(dialog_id, translate("Not Implemented",'暂未实现'),translate("This functionality has not been implemented, please wait...", "功能暂未实现，请等待..."), 'info', 'blue', 5000, [ok_btn]);
+  router.push({path:"/movie/edit", query: { id: item.id}})
 }
 
 function click_play(item){
-  play_files.value = item.can_play_files;
+  play_files.value = [];
+  for(let file of item.can_play_files){
+    if(file.can_play){
+      play_files.value.push(file);
+    }
+  }
   play_show.value = true;
 }
 
+function should_show_play_btn(item){
+  if(!item.can_play_files){
+    return false
+  }
+  for(let i of item.can_play_files){
+    if(i.can_play){
+      return true;
+    }
+  }
+  return false;
+}
 
-let show_progress_dialog = ref(true);
-let files
 async function click_download(item){
-  show_progress_dialog.value= true;
+  download_id.value = item.id;
+  download_show.value= true;
 }
 
 async function click_delete_video(item){

@@ -40,7 +40,8 @@
             </svg>
           </button>
           <button class="h-full flex justify-center items-center min-w-max" v-if="user_info.login">
-            <img class="rounded-full w-6" src="../assets/img/logo.png" alt="profile"/>
+            <img class="rounded-full w-6" v-if="user_info.profile === ''" src="../assets/img/default_profile.jpeg" alt="profile"/>
+            <img v-else :src="user_info.profile" class="rounded-full w-6" alt="logo"/>
           </button>
 
           <Transition name="profile-fade">
@@ -76,7 +77,7 @@
     <div class="flex flex-row justify-between items-center w-full">
       <div class="w-16 ml-2 origin-left	duration-300 ease-in-out transition grow" :class="{move_to_center:show_mobile_menu}">
         <a href="/">
-          <img v-if="user_info.profile === ''" src="../assets/img/logo.png" class="w-8 ml-2 brightness-90 hover:brightness-100" alt="logo"/>
+          <img v-if="user_info.profile === ''" src="../assets/img/default_profile.jpeg" class="w-8 ml-2 brightness-90 hover:brightness-100" alt="logo"/>
           <img v-else :src="user_info.profile" class="w-8 ml-2 brightness-90 hover:brightness-100" alt="logo"/>
         </a>
       </div>

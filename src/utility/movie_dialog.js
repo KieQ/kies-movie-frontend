@@ -1,4 +1,7 @@
 import {ref} from "vue";
 
-export let play_show = ref(false);
-export let play_files = ref([]);
+export const play_show = ref(false);
+export const play_files = ref([]);
+
+export const download_show = ref(false);
+export const download_id = ref(null);

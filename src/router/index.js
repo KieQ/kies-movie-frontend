@@ -4,10 +4,15 @@ import Login from "@/components/Homepage/Login.vue";
 import Signup from "@/components/Homepage/Signup.vue";
 import PageNotFound from "@/components/NotFound/PageNotFound.vue";
 import Movie from "@/components/Movie/Movie.vue";
+import MovieEdit from "@/components/Movie/Edit.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    { path: '/:pathMatch(.*)*',
+      name: '404 Not Found',
+      component: PageNotFound,
+    },
     {
       path: '/',
       name: 'home',
@@ -28,11 +33,11 @@ const router = createRouter({
       name: 'movie',
       component: Movie,
     },
-    { path: '/:pathMatch(.*)*',
-      name: '404 Not Found',
-      component: PageNotFound,
+    {
+      path: '/movie/edit',
+      name: 'movie_edit',
+      component: MovieEdit,
     },
-
   ]
 })
 

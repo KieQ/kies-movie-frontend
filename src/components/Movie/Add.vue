@@ -4,25 +4,25 @@
     <div class="flex flex-col px-1 md:px-8 py-3 h-full min-w-fit items-center mt-3 bg-purple-50 rounded-lg space-y-1 md:space-y-4">
       <div class="flex flex-row items-center justify-start w-full space-x-4">
         <label for="name" class="w-16 md:w-24 text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("Name", "名字")}}<span class="text-red-600">*</span></label>
-        <input id="name" type="text" class="px-2 grow border-[1px] border-black rounded-lg" v-model="video.name"/>
+        <input id="name" type="text" class="px-2 grow border-[1px] border-black rounded-lg" v-model="video.name" required=""/>
       </div>
       <div class="flex flex-row items-center justify-start w-full space-x-4">
         <label for="description" class="w-16 md:w-24 text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("Description", "描述")}}</label>
         <textarea id="description" rows="4" type="text" class="px-2 grow border-[1px] border-black rounded-lg" v-model="video.description"/>
       </div>
       <div class="flex flex-row items-center justify-start w-full space-x-4">
-        <label for="profile" class="w-16 md:w-24 min-w-fit text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("Poster", "海报")}}<span class="text-red-600">*</span></label>
+        <label for="poster_path" class="w-16 md:w-24 min-w-fit text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("Poster", "海报")}}<span class="text-red-600">*</span></label>
         <div class="grow flex flex-col md:flex-row items-center space-y-1 md:space-y-0 md:space-x-4">
-          <input id="profile" type="text" class="px-2 w-full border-[1px] border-black rounded-lg" v-model="video.poster_path"/>
+          <input id="poster_path" type="text" class="px-2 w-full border-[1px] border-black rounded-lg" v-model="video.poster_path" required=""/>
           <div class="flex justify-center items-center bg-gray-300 rounded dark:bg-gray-700" v-if="video.poster_path===''">
             <svg class="h-32 w-24 text-gray-200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 640 512"><path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z"/></svg>
           </div>
-          <img :src="video.poster_path" class="object-cover overflow-hidden h-32 w-24" v-if="video.poster_path!==''"/>
+          <img :src="video.poster_path" class="object-cover overflow-hidden h-32 w-24" v-if="video.poster_path!==''" alt=""/>
         </div>
       </div>
       <div class="flex flex-row items-center justify-start w-full space-x-4">
-        <label for="region" class="w-16 md:w-24 text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("Video Type", "视频类型")}}<span class="text-red-600">*</span></label>
-        <select id="region" class="px-2 grow border-[1px] border-black rounded-lg" v-model="video.video_type">
+        <label for="video_type" class="w-16 md:w-24 text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("Video Type", "视频类型")}}<span class="text-red-600">*</span></label>
+        <select id="video_type" class="px-2 grow border-[1px] border-black rounded-lg" v-model="video.video_type" required="">
           <option value="" selected>{{translate("Unselected","未选择")}}</option>
           <option value="0">{{translate("Movie","电影")}}</option>
           <option value="1">{{translate("TV","电视剧")}}</option>
@@ -32,7 +32,7 @@
       </div>
       <div class="flex flex-row items-center justify-start w-full space-x-4">
         <label for="region" class="w-16 md:w-24 text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("Language", "语言")}}<span class="text-red-600">*</span></label>
-        <select id="region" class="px-2 grow border-[1px] border-black rounded-lg" v-model="video.region">
+        <select id="region" class="px-2 grow border-[1px] border-black rounded-lg" v-model="video.region" required="">
           <option value="" selected>{{translate("Unselected","未选择")}}</option>
           <option value="en">{{translate("English","英语")}}</option>
           <option value="zh">{{translate("Chinese","中文")}}</option>
@@ -50,16 +50,16 @@
       </div>
       <div class="flex flex-row items-center justify-start w-full space-x-4" v-if="video.link_type==='1' || video.link_type==='2'">
         <label for="link" class="w-16 md:w-24 text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("Link", "链接")}}<span class="text-red-600">*</span></label>
-        <input id="link" type="text" class="px-2 grow border-[1px] border-black rounded-lg" v-model="video.link"/>
+        <input id="link" type="text" class="px-2 grow border-[1px] border-black rounded-lg" v-model="video.link" required/>
       </div>
       <div class="flex flex-row items-center justify-start w-full space-x-4" v-else-if="video.link_type==='3'">
         <label for="link_file" class="w-16 md:w-24 text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("File", "种子文件")}}<span class="text-red-600">*</span></label>
-        <input id="link_file" type="file" class="grow"/>
+        <input id="link_file" type="file" class="grow" required/>
       </div>
       <div class="flex flex-row items-center justify-start w-full space-x-4">
-        <label for="profile" class="w-16 md:w-24 min-w-fit text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("Backdrop", "背景")}}<span class="text-red-600">*</span></label>
+        <label for="backdrop_path" class="w-16 md:w-24 min-w-fit text-center text-xs md:text-sm font-medium text-gray-900 dark:text-white">{{translate("Backdrop", "背景")}}<span class="text-red-600">*</span></label>
         <div class="grow flex flex-col md:flex-row items-center space-y-1 md:space-y-0 md:space-x-4">
-          <input id="profile" type="text" class="px-2 w-full border-[1px] border-black rounded-lg" v-model="video.backdrop_path"/>
+          <input id="backdrop_path" type="text" class="px-2 w-full border-[1px] border-black rounded-lg" v-model="video.backdrop_path" required=""/>
           <div class="flex justify-center items-center bg-gray-300 rounded dark:bg-gray-700" v-if="video.backdrop_path===''">
             <svg class="w-32 h-32 text-gray-200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 640 512"><path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z"/></svg>
           </div>
@@ -99,6 +99,13 @@ const video = reactive({
 })
 
 async function submit(){
+  let all_input = document.querySelectorAll('input');
+  for(let e of all_input){
+    if(!e.reportValidity()){
+      return;
+    }
+  }
+
   let data = new FormData();
   data.set("name", video.name);
   data.set("description", video.description);

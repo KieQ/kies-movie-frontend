@@ -1,13 +1,13 @@
 import {update_user_info, user_info} from "@/utility/session";
 
-// const api = "/api"
+const api = "/api"
 
-//TODO Debug code, delete later
-const api = "http://localhost:8080"
+// //TODO Debug code, delete later
+// const api = "http://localhost:8080"
 
 async function do_fetch(url, option){
-    //TODO Debug code, delete later
-    option = Object.assign(option||{}, {credentials:"include"})
+    // //TODO Debug code, delete later
+    // option = Object.assign(option||{}, {credentials:"include"})
 
     let result = await fetch(`${api}${url}`, option)
     if(result.status !== 200){
@@ -61,6 +61,13 @@ export async function video_add(data){
     })
 }
 
+export async function video_update(data){
+    return await do_fetch("/video/update", {
+        method: "POST",
+        body: data
+    })
+}
+
 export async function video_delete(id){
     return await do_fetch("/video/delete", {
         method: "POST",
@@ -105,6 +112,21 @@ export async function not_login_video_list(page, size){
 
 export async function video_available_files(id){
     return await do_fetch("/video/available_files?" + new URLSearchParams({
+        id
+    }));
+}
+
+export async function video_download(id, info_hash, files){
+    return await do_fetch("/video/download" , {
+        method:"POST",
+        body: JSON.stringify({
+            id, info_hash, files
+        })
+    });
+}
+
+export async function video_detail(id){
+    return await do_fetch("/video/detail?"  + new URLSearchParams({
         id
     }));
 }

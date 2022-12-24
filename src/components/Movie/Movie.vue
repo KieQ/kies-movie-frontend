@@ -18,7 +18,7 @@
         <div class="w-full grow flex flex-col relative">
           <Transition name="slide-up" mode="out-in">
             <MyList v-if="active_btn_id===0 && user_info.login"></MyList>
-            <AddMovie v-else-if="active_btn_id===1 && user_info.login"></AddMovie>
+            <Add v-else-if="active_btn_id===1 && user_info.login"></Add>
             <PublicList v-else-if="active_btn_id===2"></PublicList>
           </Transition>
         </div>
@@ -32,7 +32,7 @@ import {language, translate} from "@/utility/language";
 import {nextTick, onMounted, ref, watch} from "vue";
 import MyList from "@/components/Movie/MyList.vue";
 import PublicList from "@/components/Movie/PublicList.vue";
-import AddMovie from "@/components/Movie/AddMovie.vue";
+import Add from "@/components/Movie/Add.vue";
 import {user_info} from "@/utility/session";
 
 const active_btn_id = ref(0);
