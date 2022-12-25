@@ -3,7 +3,7 @@
     <div class="h-full flex flex-row justify-center grow space-x-0 relative touch-pan-y">
       <TransitionGroup :name="move_left?'slide_left':'slide_right'">
         <template v-for="(item, idx) of content" :key="idx">
-          <div class="absolute top-0 h-1/2 md:h-full overflow-hidden flex flex-col justify-end select-none" v-show="idx===active_idx">
+          <div class="absolute top-0 h-1/2 md:h-full w-full overflow-hidden flex flex-col justify-end select-none" v-show="idx===active_idx">
             <img class="object-cover absolute w-full h-full" :src="item.background_image" alt="">
             <div class="flex flex-col px-10 md:px-32 py-12 md:py-24 z-10">
               <h1 class="text-white text-lg md:text-2xl bg-gray-700/70">{{item.title}}</h1>
