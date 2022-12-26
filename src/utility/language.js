@@ -13,5 +13,6 @@ export function translate(en, zh){
     return en
 }
 watchEffect(()=>{
+    document.title = translate("Little Bear Watches Movie", "小熊看电影")
     document.cookie = `language=${language.value}`
 })

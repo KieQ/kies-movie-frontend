@@ -193,7 +193,6 @@
   }
 
   watch(language, (new_value, old_value)=>{
-    document.title = translate("Little Bear Watches Movie", "小熊看电影")
     if(user_info.login){
       let dialog_id = dialog_operator.once_dialog_id;
       let btn = [];
